@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Java application service
+#  app:
+#    build:
+#      context: .  # Build the image using the Dockerfile in the current directory
+#    container_name: exchange-app
+#    depends_on:
+#      - db  # Make sure db starts before the app
+#    ports:
+#      - "${APP_PORT}:${APP_PORT}"  # Use environment variable for the port
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}  # Use env variable for database URL
+#      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}  # Use env variable for username
+#      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}  # Use env variable for password
+#    # Other configurations like volumes, networks can go here
+#
+#  # PostgreSQL service
+  db:
+    image: postgres:15-alpine
+    container_name: eventure-db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}  # Use env variable for username
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}  # Use env variable for password
+      - POSTGRES_DB=${POSTGRES_DB}  # Use env variable for database name
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist data across restarts
+    ports:
+      - "${POSTGRES_PORT}:5432"  # Expose PostgreSQL port for local access
+
+# Volumes to persist PostgreSQL data
+volumes:
+  postgres_data:
+    driver: local
