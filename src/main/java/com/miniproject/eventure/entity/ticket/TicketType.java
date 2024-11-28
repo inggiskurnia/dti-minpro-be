@@ -1,4 +1,4 @@
-package com.miniproject.eventure.entity;
+package com.miniproject.eventure.entity.ticket;
 
 import lombok.Getter;
 import lombok.Setter;

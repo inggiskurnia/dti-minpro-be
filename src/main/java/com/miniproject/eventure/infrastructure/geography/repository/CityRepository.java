@@ -1,6 +1,6 @@
-package com.miniproject.eventure.infrastructure.user.repository;
+package com.miniproject.eventure.infrastructure.geography.repository;
 
-import com.miniproject.eventure.entity.City;
+import com.miniproject.eventure.entity.geography.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

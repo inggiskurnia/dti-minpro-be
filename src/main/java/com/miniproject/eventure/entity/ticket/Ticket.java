@@ -1,5 +1,6 @@
-package com.miniproject.eventure.entity;
+package com.miniproject.eventure.entity.ticket;
 
+import com.miniproject.eventure.entity.event.Event;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMin;

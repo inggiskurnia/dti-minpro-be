@@ -1,4 +1,4 @@
-package com.miniproject.eventure.entity;
+package com.miniproject.eventure.entity.event;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

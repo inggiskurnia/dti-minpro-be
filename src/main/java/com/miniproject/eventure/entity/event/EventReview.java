@@ -1,8 +1,8 @@
-package com.miniproject.eventure.entity;
+package com.miniproject.eventure.entity.event;
 
+import com.miniproject.eventure.entity.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
 import lombok.Getter;

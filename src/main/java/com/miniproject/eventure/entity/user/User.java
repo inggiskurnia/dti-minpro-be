@@ -1,5 +1,6 @@
-package com.miniproject.eventure.entity;
+package com.miniproject.eventure.entity.user;
 
+import com.miniproject.eventure.entity.geography.City;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
