@@ -16,6 +16,6 @@ public class Province {
     @Column(name = "province_id", nullable = false)
     private Long id;
 
-    @Column(name= "name", nullable = false, length = 100)
+    @Column(name= "name", nullable = false, length = 100, unique = true)
     private String name;
 }
