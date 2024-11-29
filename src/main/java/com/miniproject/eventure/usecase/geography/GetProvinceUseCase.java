@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface GetProvinceUseCase {
     List<Province> getAllProvince();
+    Province getProvince(String name);
 }

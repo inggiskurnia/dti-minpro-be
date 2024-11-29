@@ -1,5 +1,6 @@
 package com.miniproject.eventure.infrastructure.geography.controller;
 
+import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.common.exeptions.EmptyRequestDataException;
 import com.miniproject.eventure.common.responses.ApiResponse;
@@ -23,8 +24,16 @@ public class ProvinceController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllProvince() {
-        return ApiResponse.success(HttpStatus.OK.value(), "Get all province success", getProvinceUseCase.getAllProvince());
+    public ResponseEntity<?> getProvinces(@RequestParam(required = false) String name) {
+        if(name == null){
+            return ApiResponse.success(HttpStatus.OK.value(), "Get all province success", getProvinceUseCase.getAllProvince());
+        } else {
+            try{
+                return ApiResponse.success(HttpStatus.OK.value(), "Get province sucess", getProvinceUseCase.getProvince(name));
+            }catch (DataNotFoundException e){
+                return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+            }
+        }
     }
 
     @PostMapping
