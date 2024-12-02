@@ -27,12 +27,6 @@ public class CreateUserRequestDTO {
     private String password;
 
     @NotNull
-    private Long cityId;
-
-    @NotNull
-    private LocalDateTime birthdate;
-
-    @NotNull
     private boolean isOrganizer;
 
     public User toEntity(){
@@ -40,7 +34,6 @@ public class CreateUserRequestDTO {
         user.setFullName(fullName);
         user.setEmail(email);
         user.setPassword(password);
-        user.setBirthdate(birthdate);
         user.setIsOrganizer(isOrganizer);
 
         return user;

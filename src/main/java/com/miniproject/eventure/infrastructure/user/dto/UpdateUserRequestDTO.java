@@ -23,7 +23,7 @@ public class UpdateUserRequestDTO {
 
     private Long cityId;
 
-    private LocalDateTime birthdate;
+    private OffsetDateTime birthdate;
 
     private String profilePicture;
 

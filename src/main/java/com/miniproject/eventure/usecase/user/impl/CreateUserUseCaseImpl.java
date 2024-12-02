@@ -34,12 +34,6 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         }
 
         User newUser = req.toEntity();
-        City city = cityRepository.findById(req.getCityId())
-                .orElseThrow(()-> new DataNotFoundException("City ID not found!"));
-
-        newUser.setCity(city);
-        newUser.setReferralCode(referralCodeGenerator.generateReferralCode(req.getFullName(), req.getBirthdate()));
-
         return userRepository.save(newUser);
     }
 }

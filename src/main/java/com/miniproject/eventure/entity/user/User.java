@@ -42,7 +42,7 @@ public class User {
 
     @NotNull
     @Column(name = "birthdate", nullable = false, columnDefinition = "TIMESTAMP")
-    private LocalDateTime birthdate;
+    private OffsetDateTime birthdate;
 
     @Column(name = "is_organizer",nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isOrganizer;
@@ -56,7 +56,7 @@ public class User {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;
 
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
     @Column(name = "deleted_at")
