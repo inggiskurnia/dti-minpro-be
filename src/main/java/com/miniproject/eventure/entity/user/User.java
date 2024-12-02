@@ -22,32 +22,42 @@ public class User {
 
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(nullable = false, length = 100)
-    private String name;
+    @Column(name = "full_name", nullable = false, length = 100)
+    private String fullName;
 
     @NotNull
     @Email
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
     @NotNull
     @Size(min = 8, max = 255)
-    @Column(nullable = false, length = 255)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
-
-    @NotNull
-    @Size(max = 50)
-    @Column(nullable = false, length = 50)
-    private String role;
 
     @ManyToOne
     @JoinColumn(name = "cities_id")
     private City city;
 
+    @NotNull
+    @Column(name = "birthdate", nullable = false, columnDefinition = "TIMESTAMP")
+    private LocalDateTime birthdate;
+
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "is_organizer",nullable = false, length = 50)
+    private String isOrganizer;
+
+    @Column(name = "referral_code")
+    private String referralCode;
+
+    @Column(name = "profile_picture")
+    private String profilePicture;
+
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
