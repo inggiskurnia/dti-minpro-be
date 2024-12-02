@@ -33,6 +33,7 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
 
     @Override
     public Event updateEvent(Long id, UpdateEventRequestDTO req) {
+
         Event event = eventRepository.findById(id)
                 .orElseThrow(()-> new DataNotFoundException("Event Id not found !"));
 
@@ -41,7 +42,7 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
                     .orElseThrow(()-> new DataNotFoundException("Organizer Id not found"));
             event.setOrganizerId(organizer);
         }
-        if ((req.getName()) != null){
+        if (req.getName() != null){
             event.setName(req.getName());
         }
         if (req.getDescription() != null){
@@ -83,6 +84,6 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
         }
         event.setUpdatedAt(OffsetDateTime.now());
 
-        return event;
+        return eventRepository.save(event);
     }
 }

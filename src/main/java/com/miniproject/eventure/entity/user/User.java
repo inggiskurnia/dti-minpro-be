@@ -40,7 +40,6 @@ public class User {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @NotNull
     @Column(name = "birthdate", nullable = false, columnDefinition = "TIMESTAMP")
     private OffsetDateTime birthdate;
 

@@ -30,6 +30,15 @@ public class EventController {
         return ApiResponse.success(HttpStatus.OK.value(), "Get all event success", getEventUseCase.getAllEvent());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEventById(@PathVariable Long id){
+        try {
+            return ApiResponse.success(HttpStatus.OK.value(), "Get event success", getEventUseCase.getEventById(id));
+        }catch (DataNotFoundException e){
+            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> createEvent(@RequestBody CreateEventRequestDTO req){
         try{
@@ -40,7 +49,7 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEvent(@PathVariable Long id, UpdateEventRequestDTO req){
+    public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody UpdateEventRequestDTO req){
         try {
             return ApiResponse.success(HttpStatus.OK.value(), "Update event success", updateEventUseCase.updateEvent(id, req));
         }catch (DataNotFoundException e){

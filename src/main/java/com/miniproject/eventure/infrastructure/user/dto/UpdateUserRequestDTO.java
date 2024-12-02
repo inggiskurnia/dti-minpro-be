@@ -2,11 +2,9 @@ package com.miniproject.eventure.infrastructure.user.dto;
 
 import com.miniproject.eventure.entity.user.User;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Data
