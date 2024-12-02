@@ -1,16 +1,13 @@
 package com.miniproject.eventure.common.utils;
 
 import com.miniproject.eventure.infrastructure.user.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-@Data
+@Service
 public class ReferralCodeGenerator {
 
     private final UserRepository userRepository;
