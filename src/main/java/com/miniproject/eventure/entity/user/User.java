@@ -6,7 +6,6 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Setter
@@ -19,7 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_gen")
     @SequenceGenerator(name = "users_id_gen", sequenceName = "users_user_id_seq", allocationSize = 1)
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     @NotNull
     @Size(min = 1, max = 100)

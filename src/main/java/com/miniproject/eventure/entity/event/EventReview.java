@@ -19,7 +19,7 @@ public class EventReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_reviews_id_gen")
-    @SequenceGenerator(name = "event_reviews_id_gen", sequenceName = "event_reviews_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "event_reviews_id_gen", sequenceName = "event_reviews_event_review_id_seq", allocationSize = 1)
     @Column(name = "event_review_id")
     private Long eventReviewId;
 
