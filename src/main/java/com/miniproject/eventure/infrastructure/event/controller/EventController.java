@@ -3,10 +3,7 @@ package com.miniproject.eventure.infrastructure.event.controller;
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.common.responses.ApiResponse;
-import com.miniproject.eventure.infrastructure.event.dto.CreateEventFeedbackRequestDTO;
-import com.miniproject.eventure.infrastructure.event.dto.CreateEventRequestDTO;
-import com.miniproject.eventure.infrastructure.event.dto.CreateEventReviewRequestDTO;
-import com.miniproject.eventure.infrastructure.event.dto.UpdateEventRequestDTO;
+import com.miniproject.eventure.infrastructure.event.dto.*;
 import com.miniproject.eventure.usecase.event.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +28,9 @@ public class EventController {
 
     @Autowired
     CreateEventFeedbackUseCase createEventFeedbackUseCase;
+
+    @Autowired
+    CreateEventPictureUseCase createEventPictureUseCase;
 
     @GetMapping
     public ResponseEntity<?> getAllEvent(){
@@ -79,6 +79,15 @@ public class EventController {
     public ResponseEntity<?> createEventFeedback(@RequestBody CreateEventFeedbackRequestDTO req){
         try {
             return ApiResponse.success((HttpStatus.OK.value()), "Create event feedback success", createEventFeedbackUseCase.createEventFeedback(req));
+        }catch (DataNotFoundException e){
+            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id}/picture")
+    public ResponseEntity<?> createEventPicture(@PathVariable Long id, @RequestBody BulkCreateEventPictureRequestDTO req){
+        try{
+            return ApiResponse.success(HttpStatus.OK.value(), "Create event pictures success", createEventPictureUseCase.bulkCreateEventPicture(id, req));
         }catch (DataNotFoundException e){
             return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
         }
