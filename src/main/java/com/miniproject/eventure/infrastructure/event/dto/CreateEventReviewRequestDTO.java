@@ -1,7 +1,5 @@
 package com.miniproject.eventure.infrastructure.event.dto;
 
-import com.miniproject.eventure.entity.event.EventFeedback;
-import com.miniproject.eventure.entity.event.EventReview;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

@@ -21,11 +21,11 @@ public class EventFeedback {
 
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false, foreignKey = @ForeignKey(name = "event_feedbacks_event_id_fkey"))
-    private Event eventId;
+    private Event event;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "event_feedbacks_user_id_fkey"))
-    private User userId;
+    private User user;
 
     @Column(name = "feedback", length = 1000)
     private String feedback;

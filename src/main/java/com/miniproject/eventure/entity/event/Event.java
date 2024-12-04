@@ -7,7 +7,6 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Setter
@@ -25,7 +24,7 @@ public class Event {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false, foreignKey = @ForeignKey(name = "FK_organizer"))
-    private User organizerId;
+    private User organizer;
 
     @NotNull
     @Size(max = 100)
@@ -43,7 +42,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "event_category_id", foreignKey = @ForeignKey(name = "FK_event_category"))
-    private EventCategory eventCategoryId;
+    private EventCategory eventCategory;
 
     @ManyToOne
     @JoinColumn(name = "city_id", foreignKey = @ForeignKey(name = "FK_city"))

@@ -14,8 +14,6 @@ import com.miniproject.eventure.usecase.event.CreateEventUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class CreateEventUseCaseImpl implements CreateEventUseCase {
 
@@ -37,11 +35,11 @@ public class CreateEventUseCaseImpl implements CreateEventUseCase {
 
         User user = userRepository.findById(req.getOrganizerId())
                 .orElseThrow(() -> new DataNotFoundException("User not found !"));
-        newEvent.setOrganizerId(user);
+        newEvent.setOrganizer(user);
 
         EventCategory eventCategory = eventCategoryRepository.findById(req.getEventCategoryId())
                 .orElseThrow(() -> new DataNotFoundException("Event category ID not found !"));
-        newEvent.setEventCategoryId(eventCategory);
+        newEvent.setEventCategory(eventCategory);
 
         City city = cityRepository.findById(req.getCityId())
                 .orElseThrow(() -> new DataNotFoundException("City ID not found !"));

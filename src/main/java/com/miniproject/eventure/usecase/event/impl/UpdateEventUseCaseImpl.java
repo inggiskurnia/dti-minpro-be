@@ -40,7 +40,7 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
         if(req.getOrganizerId() != null){
             User organizer = userRepository.findById(req.getOrganizerId())
                     .orElseThrow(()-> new DataNotFoundException("Organizer Id not found"));
-            event.setOrganizerId(organizer);
+            event.setOrganizer(organizer);
         }
         if (req.getName() != null){
             event.setName(req.getName());
@@ -54,7 +54,7 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
         if (req.getEventCategoryId() != null) {
             EventCategory eventCategory = eventCategoryRepository.findById(req.getEventCategoryId())
                     .orElseThrow(() -> new DataNotFoundException("Event category Id not found"));
-            event.setEventCategoryId(eventCategory);
+            event.setEventCategory(eventCategory);
         }
         if (req.getCityId() != null){
             City city = cityRepository.findById(req.getCityId())
