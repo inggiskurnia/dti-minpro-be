@@ -1,6 +1,7 @@
 package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventFeedback;
 import com.miniproject.eventure.entity.user.User;
@@ -11,6 +12,8 @@ import com.miniproject.eventure.infrastructure.user.repository.UserRepository;
 import com.miniproject.eventure.usecase.event.CreateEventFeedbackUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CreateEventFeedbackUseCaseImpl implements CreateEventFeedbackUseCase {
@@ -25,14 +28,19 @@ public class CreateEventFeedbackUseCaseImpl implements CreateEventFeedbackUseCas
     EventRepository eventRepository;
 
     @Override
-    public EventFeedback createEventFeedback(CreateEventFeedbackRequestDTO req) {
+    public EventFeedback createEventFeedback(Long eventId, Long userId, CreateEventFeedbackRequestDTO req) {
+        Optional<EventFeedback> foundEventFeedback = eventFeedbackRepository.findByEventEventIdAndUserUserId(eventId, userId);
+        if (foundEventFeedback.isPresent()){
+            throw new DuplicateRequestDataException("User already gave feedback for this event !");
+        }
+
         EventFeedback newEventFeedback = new EventFeedback();
 
-        Event event = eventRepository.findById(req.getEventId())
-                .orElseThrow(()-> new DataNotFoundException("Event with Id "+ req.getEventId() + " not found !"));
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(()-> new DataNotFoundException("Event with Id "+ eventId + " not found !"));
 
-        User user = userRepository.findById(req.getUserId())
-                .orElseThrow(()-> new DataNotFoundException("User with Id" + req.getUserId() + "not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new DataNotFoundException("User with Id" + userId + "not found"));
 
         newEventFeedback.setEvent(event);
         newEventFeedback.setUser(user);

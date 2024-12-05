@@ -7,8 +7,6 @@ import lombok.Data;
 
 @Data
 public class CreateEventReviewRequestDTO {
-    @NotNull
-    private Long eventId;
 
     @NotNull
     private Long userId;

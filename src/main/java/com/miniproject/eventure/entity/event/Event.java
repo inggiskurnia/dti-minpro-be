@@ -7,6 +7,7 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Setter
@@ -66,6 +67,9 @@ public class Event {
     @NotNull
     @Column(name = "ended_at", nullable = false)
     private OffsetDateTime endedAt;
+
+    @Column(name = "starting_price")
+    private BigDecimal startingPrice;
 
     @NotNull
     @Min(0)

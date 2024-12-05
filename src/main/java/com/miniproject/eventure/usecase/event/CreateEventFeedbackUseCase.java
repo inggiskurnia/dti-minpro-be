@@ -4,5 +4,5 @@ import com.miniproject.eventure.entity.event.EventFeedback;
 import com.miniproject.eventure.infrastructure.event.dto.CreateEventFeedbackRequestDTO;
 
 public interface CreateEventFeedbackUseCase {
-    EventFeedback createEventFeedback(CreateEventFeedbackRequestDTO req);
+    EventFeedback createEventFeedback(Long eventId, Long userId, CreateEventFeedbackRequestDTO req);
 }

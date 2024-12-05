@@ -27,17 +27,17 @@ public class CreateEventReviewUseCaseImpl implements CreateEventReviewUseCase {
     EventReviewRepository eventReviewRepository;
 
     @Override
-    public EventReview createEventReview(CreateEventReviewRequestDTO req) {
-        Optional<EventReview> foundEventReview = eventReviewRepository.findByEventEventIdAndUserUserId(req.getEventId(), req.getUserId());
+    public EventReview createEventReview(Long eventId, CreateEventReviewRequestDTO req) {
+        Optional<EventReview> foundEventReview = eventReviewRepository.findByEventEventIdAndUserUserId(eventId, req.getUserId());
         if (foundEventReview.isPresent()){
             throw new DuplicateRequestDataException("User already gave review for this event !");
         }
 
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(()-> new DataNotFoundException("Event ID not found !"));
+
         User user = userRepository.findById(req.getUserId())
                 .orElseThrow(()-> new DataNotFoundException("User Id not found !"));
-
-        Event event = eventRepository.findById(req.getEventId())
-                .orElseThrow(()-> new DataNotFoundException("Event ID not found !"));
 
         EventReview newEventReview = new EventReview();
         newEventReview.setEvent(event);
