@@ -6,8 +6,10 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -32,6 +34,11 @@ public class User {
     private String email;
 
     @NotNull
+    @DecimalMin("0")
+    @Column(name = "point", nullable = false, precision = 10, scale = 0)
+    private BigDecimal point = BigDecimal.ZERO;
+
+    @NotNull
     @Size(min = 8, max = 255)
     @Column(name = "password", nullable = false, length = 255)
     private String password;
@@ -43,14 +50,18 @@ public class User {
     @Column(name = "birthdate", nullable = false, columnDefinition = "TIMESTAMP")
     private OffsetDateTime birthdate;
 
-    @Column(name = "is_organizer",nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private Boolean isOrganizer;
+//    @Column(name = "is_organizer",nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+//    private Boolean isOrganizer;
 
     @Column(name = "referral_code")
     private String referralCode;
 
     @Column(name = "profile_picture")
     private String profilePicture;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;
@@ -75,6 +86,10 @@ public class User {
     @PreRemove
     protected void onRemove() {
         deletedAt = OffsetDateTime.now();
+    }
+
+    public Boolean isOrganizer() {
+        return roles.stream().anyMatch(role -> role.getName().equals("ORGANIZER"));
     }
 }
 
