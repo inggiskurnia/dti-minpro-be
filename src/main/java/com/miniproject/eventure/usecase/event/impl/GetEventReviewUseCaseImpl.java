@@ -1,5 +1,6 @@
 package com.miniproject.eventure.usecase.event.impl;
 
+import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.utils.PaginationInfo;
 import com.miniproject.eventure.entity.event.EventReview;
 import com.miniproject.eventure.infrastructure.event.dto.GetPaginatedEventReviewResponseDTO;
@@ -30,8 +31,12 @@ public class GetEventReviewUseCaseImpl implements GetEventReviewUseCase {
     }
 
     @Override
-    public PaginationInfo<GetPaginatedEventReviewResponseDTO> getPaginatedEventReview(PageRequest pageRequest) {
-        Page<EventReview> eventReviews = eventReviewRepository.findAll(pageRequest);
+    public PaginationInfo<GetPaginatedEventReviewResponseDTO> getPaginatedEventReview(Long eventId, PageRequest pageRequest) {
+        Page<EventReview> eventReviews = eventReviewRepository.findByEventEventId(eventId, pageRequest);
+        if (eventReviews.isEmpty()){
+            throw new DataNotFoundException("Event review with event ID " + eventId + " not found !");
+        }
+
         List<GetPaginatedEventReviewResponseDTO> eventReviewsDTO = eventReviews.stream().map(GetPaginatedEventReviewResponseDTO::new).toList();
         return new PaginationInfo<>(eventReviews, eventReviewsDTO);
     }

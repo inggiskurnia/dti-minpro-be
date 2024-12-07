@@ -6,5 +6,5 @@ import com.miniproject.eventure.infrastructure.event.dto.BulkCreateEventPictureR
 import java.util.List;
 
 public interface CreateEventPictureUseCase {
-    List<EventPicture> bulkCreateEventPicture(Long id, BulkCreateEventPictureRequestDTO req);
+    List<EventPicture> bulkCreateEventPicture(Long eventId, BulkCreateEventPictureRequestDTO req);
 }

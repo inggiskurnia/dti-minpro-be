@@ -42,6 +42,9 @@ public class EventController {
     @Autowired
     CreateEventPictureUseCase createEventPictureUseCase;
 
+    @Autowired
+    GetEventPictureUseCase getEventPictureUseCase;
+
     @GetMapping
     public ResponseEntity<?> getEvent(
             @RequestParam(required = false, defaultValue = "10") int limit,
@@ -83,22 +86,14 @@ public class EventController {
         }
     }
 
-    @GetMapping("/review/{eventReviewId}")
-    public ResponseEntity<?> getEventReviewById(@PathVariable Long eventReviewId){
-        try{
-            return ApiResponse.success(HttpStatus.OK.value(), "Get event review success", getEventReviewUseCase.getAllEventReviewById(eventReviewId));
-        }catch (DataNotFoundException e){
-            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
-        }
-    }
-
     @GetMapping("/{eventId}/review")
     public ResponseEntity<?> getPaginatedEventReview(
+            @PathVariable Long eventId,
             @RequestParam(required = false, defaultValue = "10") int limit,
             @RequestParam(required = false, defaultValue = "0") int page)
     {
         PageRequest pageRequest = PageRequest.of(page, limit);
-        return ApiResponse.success(HttpStatus.OK.value(), "Get paginated event review success", getEventReviewUseCase.getPaginatedEventReview(pageRequest));
+        return ApiResponse.success(HttpStatus.OK.value(), "Get paginated event review success", getEventReviewUseCase.getPaginatedEventReview(eventId, pageRequest));
     }
 
     @PostMapping("/{eventId}/review")
@@ -137,11 +132,20 @@ public class EventController {
         }
     }
 
-    @PostMapping("/{id}/picture")
-    public ResponseEntity<?> createEventPicture(@PathVariable Long id, @RequestBody BulkCreateEventPictureRequestDTO req){
+    @PostMapping("/{eventId}/picture")
+    public ResponseEntity<?> createEventPicture(@PathVariable Long eventId, @RequestBody BulkCreateEventPictureRequestDTO req){
         try{
-            return ApiResponse.success(HttpStatus.OK.value(), "Create event pictures success", createEventPictureUseCase.bulkCreateEventPicture(id, req));
+            return ApiResponse.success(HttpStatus.OK.value(), "Create event pictures success", createEventPictureUseCase.bulkCreateEventPicture(eventId, req));
         }catch (DataNotFoundException e){
+            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        }
+    }
+
+    @GetMapping("{eventId}/picture")
+    public ResponseEntity<?> getAllEventPicture(@PathVariable Long eventId){
+        try{
+            return ApiResponse.success(HttpStatus.OK.value(), "Get all event pictures success", getEventPictureUseCase.getAllEventPicture(eventId));
+        } catch (DataNotFoundException e){
             return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
         }
     }

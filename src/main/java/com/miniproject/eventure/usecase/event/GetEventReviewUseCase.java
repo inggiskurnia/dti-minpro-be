@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface GetEventReviewUseCase {
     List<EventReview> getAllEventReview();
     Optional<EventReview> getAllEventReviewById(Long eventReviewId);
-    PaginationInfo<GetPaginatedEventReviewResponseDTO> getPaginatedEventReview(PageRequest pageRequest);
+    PaginationInfo<GetPaginatedEventReviewResponseDTO> getPaginatedEventReview(Long eventId, PageRequest pageRequest);
 }

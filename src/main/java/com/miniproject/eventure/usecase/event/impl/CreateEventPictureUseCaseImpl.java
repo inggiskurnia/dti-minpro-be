@@ -22,10 +22,10 @@ public class CreateEventPictureUseCaseImpl implements CreateEventPictureUseCase 
     EventPictureRepository eventPictureRepository;
 
     @Override
-    public List<EventPicture> bulkCreateEventPicture(Long id, BulkCreateEventPictureRequestDTO req) {
+    public List<EventPicture> bulkCreateEventPicture(Long eventId, BulkCreateEventPictureRequestDTO req) {
 
-        Event event = eventRepository.findById(id)
-                .orElseThrow(()-> new DataNotFoundException("Event with ID " + id + "not found !"));
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(()-> new DataNotFoundException("Event with ID " + eventId + "not found !"));
 
         List<EventPicture> eventPictures = req.getEventPictureUrls().stream() .map(dto -> dto.toEntity(event)).toList();
 
