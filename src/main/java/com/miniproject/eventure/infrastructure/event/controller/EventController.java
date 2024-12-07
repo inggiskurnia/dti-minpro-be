@@ -45,6 +45,9 @@ public class EventController {
     @Autowired
     GetEventPictureUseCase getEventPictureUseCase;
 
+    @Autowired
+    CreateEventOrganizerUseCase createEventOrganizerUseCase;
+
     @GetMapping
     public ResponseEntity<?> getEvent(
             @RequestParam(required = false, defaultValue = "10") int limit,
@@ -147,6 +150,17 @@ public class EventController {
             return ApiResponse.success(HttpStatus.OK.value(), "Get all event pictures success", getEventPictureUseCase.getAllEventPicture(eventId));
         } catch (DataNotFoundException e){
             return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        }
+    }
+
+    @PostMapping("/organizer")
+    public ResponseEntity<?> createEventOrganizer(@RequestBody CreateEventOrganizerRequestDTO req){
+        try{
+            return ApiResponse.success(HttpStatus.OK.value(), "Create event organizer success", createEventOrganizerUseCase.createEventOrganizer(req));
+        } catch (DataNotFoundException e){
+            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        }catch (DuplicateRequestDataException e){
+            return ApiResponse.failed(HttpStatus.CONFLICT.value(), e.getMessage());
         }
     }
 }

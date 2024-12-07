@@ -3,6 +3,7 @@ package com.miniproject.eventure.entity.event;
 import com.miniproject.eventure.entity.geography.City;
 import com.miniproject.eventure.entity.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,14 +16,16 @@ import java.time.OffsetDateTime;
 public class EventOrganizer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_organizers_id_gen")
-    @SequenceGenerator(name = "events_organizers_id_gen", sequenceName = "event_organizers_event_organizer_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "event_organizers_id_gen", sequenceName = "event_organizers_event_organizer_id_seq", allocationSize = 1)
     @Column(name = "event_organizer_id")
     private Long eventOrganizerId;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "users_id", nullable = false)
     private User user;
 
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
