@@ -22,13 +22,16 @@ public class Transaction {
     @Column(name = "transaction_id")
     private Long transactionId;
 
+    @NotNull @Column(name = "invoice_number", nullable = false, unique = true)
+    private String invoiceNumber;
+
     @ManyToOne
     @JoinColumn(name = "users_id", nullable = false)
     private User user;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "tickets_id", nullable = false)
+    @JoinColumn(name = "event_tickets_id", nullable = false)
     private EventTicket eventTicket;
 
     @NotNull
@@ -49,12 +52,28 @@ public class Transaction {
     @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
 
-    @NotNull
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private OffsetDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private OffsetDateTime deletedAt;
 
     @PrePersist
     protected void onCreate() {
         createdAt = OffsetDateTime.now();
+        updatedAt = OffsetDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = OffsetDateTime.now();
+    }
+
+    @PreRemove
+    protected void onRemove() {
+        deletedAt = OffsetDateTime.now();
     }
 }

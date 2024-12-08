@@ -19,7 +19,7 @@ public class EventTicket {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_tickets_id_gen")
     @SequenceGenerator(name = "event_tickets_id_gen", sequenceName = "event_tickets_event_ticket_id_seq", allocationSize = 1)
     @Column(name = "event_ticket_id")
-    private Long ticketId;
+    private Long eventTicketId;
 
     @NotNull
     @ManyToOne

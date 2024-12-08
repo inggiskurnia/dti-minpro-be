@@ -16,7 +16,7 @@ public class GetEventTicketResponseDTO {
     private String description;
 
     public GetEventTicketResponseDTO(EventTicket eventTicket){
-        this.ticketId = eventTicket.getTicketId();
+        this.ticketId = eventTicket.getEventTicketId();
         this.ticketName = eventTicket.getTicketName();
         this.price = eventTicket.getPrice();
         this.totalAvailable = eventTicket.getTotalAvailable();
