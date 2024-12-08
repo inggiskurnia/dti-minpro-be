@@ -2,7 +2,7 @@ package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.entity.event.Event;
-import com.miniproject.eventure.entity.ticket.EventTicket;
+import com.miniproject.eventure.entity.event.EventTicket;
 import com.miniproject.eventure.infrastructure.event.repository.EventRepository;
 import com.miniproject.eventure.infrastructure.event.dto.CreateEventTicketRequestDTO;
 import com.miniproject.eventure.infrastructure.event.repository.EventTicketRepository;

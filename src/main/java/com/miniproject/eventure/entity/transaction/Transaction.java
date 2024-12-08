@@ -1,6 +1,6 @@
 package com.miniproject.eventure.entity.transaction;
 
-import com.miniproject.eventure.entity.ticket.EventTicket;
+import com.miniproject.eventure.entity.event.EventTicket;
 import com.miniproject.eventure.entity.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

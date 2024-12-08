@@ -1,7 +1,7 @@
 package com.miniproject.eventure.infrastructure.event.dto;
 
 import com.miniproject.eventure.entity.event.Event;
-import com.miniproject.eventure.entity.ticket.EventTicket;
+import com.miniproject.eventure.entity.event.EventTicket;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

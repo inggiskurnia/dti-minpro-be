@@ -1,6 +1,6 @@
 package com.miniproject.eventure.infrastructure.event.dto;
 
-import com.miniproject.eventure.entity.ticket.EventTicket;
+import com.miniproject.eventure.entity.event.EventTicket;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -54,6 +54,9 @@ public class EventController {
     @Autowired
     GetEventTicketUseCase getEventTicketUseCase;
 
+    @Autowired
+    UpdateEventTicketUseCase updateEventTicketUseCase;
+
     @GetMapping
     public ResponseEntity<?> getEvent(
             @RequestParam(required = false, defaultValue = "10") int limit,
@@ -193,6 +196,15 @@ public class EventController {
         try {
             return ApiResponse.success(HttpStatus.OK.value(), "Get ticket success", getEventTicketUseCase.getEventTicketByEventId(eventId));
         } catch (DataNotFoundException e){
+            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        }
+    }
+
+    @PutMapping("/{eventId}/ticket/{ticketId}")
+    public ResponseEntity<?> updateEventTicket(@PathVariable Long eventId, @PathVariable Long ticketId, @RequestBody UpdateEventTicketRequestDTO req){
+        try {
+            return ApiResponse.success(HttpStatus.OK.value(), "Update event ticket success !", updateEventTicketUseCase.updateEventTicket(eventId, ticketId, req));
+        } catch (DataNotFoundException e) {
             return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
         }
     }
