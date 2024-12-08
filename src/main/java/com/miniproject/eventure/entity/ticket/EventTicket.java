@@ -8,30 +8,28 @@ import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Setter
 @Getter
 @Entity
 @Table(name = "tickets")
-public class Ticket {
+public class EventTicket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tickets_id_gen")
-    @SequenceGenerator(name = "tickets_id_gen", sequenceName = "tickets_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "tickets_id_gen", sequenceName = "tickets_ticket_id_seq", allocationSize = 1)
     @Column(name = "ticket_id")
     private Long ticketId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "event_id", nullable = false, foreignKey = @ForeignKey(name = "FK_event"))
     private Event event;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_type_id", nullable = false, foreignKey = @ForeignKey(name = "FK_ticket_type"))
-    private TicketType ticketType;
+    @Column(name = "ticket_name")
+    private String ticketName;
 
     @NotNull
     @DecimalMin("0.0")
@@ -50,6 +48,14 @@ public class Ticket {
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @NotNull
+    @Column(name = "started_at", nullable = false)
+    private OffsetDateTime startedAt;
+
+    @NotNull
+    @Column(name = "ended_at", nullable = false)
+    private OffsetDateTime endedAt;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;

@@ -3,12 +3,9 @@ package com.miniproject.eventure.infrastructure.event.controller;
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.common.responses.ApiResponse;
-import com.miniproject.eventure.common.utils.PaginationInfo;
-import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.infrastructure.event.dto.*;
 import com.miniproject.eventure.usecase.event.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +44,15 @@ public class EventController {
 
     @Autowired
     CreateEventOrganizerUseCase createEventOrganizerUseCase;
+
+    @Autowired
+    GetEventOrganizerUseCase getEventOrganizerUseCase;
+
+    @Autowired
+    CreateEventTicketUseCase createEventTicketUseCase;
+
+    @Autowired
+    GetEventTicketUseCase getEventTicketUseCase;
 
     @GetMapping
     public ResponseEntity<?> getEvent(
@@ -161,6 +167,33 @@ public class EventController {
             return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
         }catch (DuplicateRequestDataException e){
             return ApiResponse.failed(HttpStatus.CONFLICT.value(), e.getMessage());
+        }
+    }
+
+    @GetMapping("/organizer/{eventOrganizerId}")
+    public ResponseEntity<?> getEventOrganizerById(@PathVariable Long eventOrganizerId){
+        try {
+            return ApiResponse.success(HttpStatus.OK.value(), "Get event organizer by ID success", getEventOrganizerUseCase.getEventOrganizerById(eventOrganizerId));
+        } catch (DataNotFoundException e){
+            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        }
+    }
+
+    @PostMapping("/{eventId}/ticket")
+    public ResponseEntity<?> createEventTicket(@PathVariable Long eventId, @RequestBody CreateEventTicketRequestDTO req){
+        try {
+            return ApiResponse.success(HttpStatus.OK.value(), "Create new ticket success", createEventTicketUseCase.createEventTicket(eventId, req));
+        }catch (DataNotFoundException e){
+            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        }
+    }
+
+    @GetMapping("/{eventId}/ticket")
+    public ResponseEntity<?> getEventTicketByEventId(@PathVariable Long eventId){
+        try {
+            return ApiResponse.success(HttpStatus.OK.value(), "Get ticket success", getEventTicketUseCase.getEventTicketByEventId(eventId));
+        } catch (DataNotFoundException e){
+            return ApiResponse.failed(HttpStatus.NOT_FOUND.value(), e.getMessage());
         }
     }
 }
