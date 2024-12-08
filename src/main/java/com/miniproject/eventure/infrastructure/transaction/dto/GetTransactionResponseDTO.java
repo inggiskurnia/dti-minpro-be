@@ -6,9 +6,10 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Data
-public class CreateTransactionResponseDTO {
+public class GetTransactionResponseDTO {
 
     private Long transactionId;
+    private String invoiceNumber;
     private Long userId;
     private Long eventTicketId;
     private Integer totalTicket;
@@ -20,8 +21,9 @@ public class CreateTransactionResponseDTO {
     private OffsetDateTime updatedAt;
     private OffsetDateTime deletedAt;
 
-    public CreateTransactionResponseDTO(Transaction transaction) {
+    public GetTransactionResponseDTO(Transaction transaction) {
         this.transactionId = transaction.getTransactionId();
+        this.invoiceNumber = transaction.getInvoiceNumber();
         this.userId = transaction.getUser().getUserId();
         this.eventTicketId = transaction.getEventTicket().getEventTicketId();
         this.totalTicket = transaction.getTotalTicket();

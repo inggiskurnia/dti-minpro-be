@@ -34,6 +34,36 @@ public class GlobalExceptionHandler {
         return ApiResponse.failed(ex.getMessage());
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(TransactionNotFoundException.class)
+    public ResponseEntity<?> handleTransactionNotFoundException(TransactionNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(EventTicketNotFoundException.class)
+    public ResponseEntity<?> handleEventTicketNotFoundException(EventTicketNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<?> handleEventNotFoundException(EventNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvoiceNotFoundException.class)
+    public ResponseEntity<?> handleInvoiceNotFoundException(InvoiceNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(StatusTypeNotFoundException.class)
+    public ResponseEntity<?> StatusTypeNotFoundException(StatusTypeNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex) {
         return ApiResponse.failed(HttpStatus.UNAUTHORIZED.value(), "Access denied");

@@ -22,7 +22,8 @@ public class Transaction {
     @Column(name = "transaction_id")
     private Long transactionId;
 
-    @NotNull @Column(name = "invoice_number", nullable = false, unique = true)
+    @NotNull
+    @Column(name = "invoice_number", nullable = false, unique = true)
     private String invoiceNumber;
 
     @ManyToOne

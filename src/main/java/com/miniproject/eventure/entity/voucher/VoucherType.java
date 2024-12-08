@@ -1,31 +1,31 @@
-package com.miniproject.eventure.entity.transaction;
+package com.miniproject.eventure.entity.voucher;
 
-import com.miniproject.eventure.entity.common.StatusTypes;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "transaction_logs")
+@Table(name = "voucher_types")
 @Data
 @NoArgsConstructor
-public class TransactionLog {
-
+@AllArgsConstructor
+public class VoucherType {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_logs_id_gen")
-    @SequenceGenerator(name = "transaction_logs_id_gen", sequenceName = "transaction_logs_transaction_log_id_seq", allocationSize = 1)
-    @Column(name = "transaction_log_id")
-    private Long transactionLogId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "voucher_types_id_gen")
+    @SequenceGenerator(name = "voucher_types_id_gen", sequenceName = "voucher_types_voucher_type_id_seq", allocationSize = 1)
+    @Column(name = "voucher_type_id")
+    private Long voucherTypeId;
 
-    @ManyToOne
-    @JoinColumn(name = "transactions_id", nullable = false)
-    private Transaction transaction;
+    @NotNull
+    @Column(name = "status_name")
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "status_type_id", nullable = false)
-    private StatusTypes statusType;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;

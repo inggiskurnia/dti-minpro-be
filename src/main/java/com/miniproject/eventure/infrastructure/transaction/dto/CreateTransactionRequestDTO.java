@@ -15,9 +15,6 @@ public class CreateTransactionRequestDTO {
     private Long userId;
 
     @NotNull
-    private String invoiceNumber;
-
-    @NotNull
     private Long eventTicketId;
 
     @NotNull
@@ -33,7 +30,7 @@ public class CreateTransactionRequestDTO {
     @NotNull
     private BigDecimal totalAmount;
 
-    public Transaction toEntity(User user, EventTicket eventTicket) {
+    public Transaction toEntity(User user, String invoiceNumber, EventTicket eventTicket) {
         Transaction transaction = new Transaction();
         transaction.setInvoiceNumber(invoiceNumber);
         transaction.setUser(user);
