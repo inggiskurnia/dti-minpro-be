@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
@@ -51,13 +52,8 @@ public class Voucher {
     @Column(name = "total_available", nullable = false)
     private Integer totalAvailable;
 
-    @NotNull
-    @Column(name = "started_at", nullable = false)
-    private LocalDateTime startedAt;
-
-    @NotNull
-    @Column(name = "expired_at", nullable = false)
-    private LocalDateTime expiredAt;
+    @Column(name = "validity_period")
+    private String validityPeriod;
 
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)

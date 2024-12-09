@@ -8,13 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Data
 public class CreateVoucherRequestDTO {
-
-    @NotNull
-    private String code;
 
     @NotNull
     private String name;
@@ -33,11 +29,7 @@ public class CreateVoucherRequestDTO {
     @Min(0)
     private Integer totalAvailable;
 
-    @NotNull
-    private LocalDateTime startedAt;
-
-    @NotNull
-    private LocalDateTime expiredAt;
+    private String validityPeriod;
 
     @NotNull
     private Long eventId;
@@ -45,16 +37,15 @@ public class CreateVoucherRequestDTO {
     @NotNull
     private Long voucherTypeId;
 
-    public Voucher toEntity(Event event, VoucherType voucherType) {
+    public Voucher toEntity(String code, Event event, VoucherType voucherType) {
         Voucher voucher = new Voucher();
-        voucher.setCode(this.code);
+        voucher.setCode(code);
         voucher.setName(this.name);
         voucher.setAmount(this.amount);
         voucher.setDescription(this.description);
         voucher.setTotalCapacity(this.totalCapacity);
         voucher.setTotalAvailable(this.totalAvailable);
-        voucher.setStartedAt(this.startedAt);
-        voucher.setExpiredAt(this.expiredAt);
+        voucher.setValidityPeriod(this.validityPeriod);
         voucher.setEvent(event);
         voucher.setVoucherType(voucherType);
         return voucher;

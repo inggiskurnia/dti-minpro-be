@@ -39,6 +39,11 @@ public class GlobalExceptionHandler {
         return ApiResponse.failed(ex.getMessage());
     }
 
+    @ExceptionHandler(UserVoucherNotFoundException.class)
+    public ResponseEntity<?> handleUserVoucherNotFoundException(UserVoucherNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
     @ExceptionHandler(TransactionNotFoundException.class)
     public ResponseEntity<?> handleTransactionNotFoundException(TransactionNotFoundException ex){
         return ApiResponse.failed(ex.getMessage());
@@ -56,6 +61,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvoiceNotFoundException.class)
     public ResponseEntity<?> handleInvoiceNotFoundException(InvoiceNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(VoucherNotFoundException.class)
+    public ResponseEntity<?> handleVoucherNotFoundException(VoucherNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(VoucherTypeNotFoundException.class)
+    public ResponseEntity<?> handleVoucherTypeNotFoundException(VoucherTypeNotFoundException ex){
         return ApiResponse.failed(ex.getMessage());
     }
 

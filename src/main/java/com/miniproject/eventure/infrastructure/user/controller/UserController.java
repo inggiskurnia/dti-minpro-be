@@ -2,8 +2,10 @@ package com.miniproject.eventure.infrastructure.user.controller;
 
 import com.miniproject.eventure.common.responses.ApiResponse;
 import com.miniproject.eventure.infrastructure.user.dto.CreateUserRequestDTO;
+import com.miniproject.eventure.infrastructure.user.dto.CreateUserVoucherRequestDTO;
 import com.miniproject.eventure.infrastructure.user.dto.UpdateUserRequestDTO;
 import com.miniproject.eventure.usecase.user.CreateUserUseCase;
+import com.miniproject.eventure.usecase.user.CreateUserVoucherUseCase;
 import com.miniproject.eventure.usecase.user.GetUserUseCase;
 import com.miniproject.eventure.usecase.user.UpdateUserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,16 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private CreateUserUseCase createUserUseCase;
+    CreateUserUseCase createUserUseCase;
 
     @Autowired
-    private GetUserUseCase getUserUseCase;
+    GetUserUseCase getUserUseCase;
 
     @Autowired
-    private UpdateUserUseCase updateUserUseCase;
+    UpdateUserUseCase updateUserUseCase;
+
+    @Autowired
+    CreateUserVoucherUseCase createUserVoucherUseCase;
 
     @GetMapping
     public ResponseEntity<?> getUser() {
@@ -42,5 +47,10 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUserById(@PathVariable Long id, @RequestBody UpdateUserRequestDTO req) {
         return ApiResponse.success(HttpStatus.OK.value(), "Update user success !", updateUserUseCase.updateUser(id, req));
+    }
+
+    @PostMapping("/voucher")
+    public ResponseEntity<?> createUseVoucher(@RequestBody CreateUserVoucherRequestDTO req){
+        return ApiResponse.success(HttpStatus.OK.value(), "Create user voucher success", createUserVoucherUseCase.createUserVoucher(req));
     }
 }
