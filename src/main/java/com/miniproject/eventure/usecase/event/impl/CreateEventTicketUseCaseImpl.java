@@ -1,6 +1,7 @@
 package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventNotFoundException;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventTicket;
 import com.miniproject.eventure.infrastructure.event.repository.EventRepository;
@@ -21,7 +22,7 @@ public class CreateEventTicketUseCaseImpl implements CreateEventTicketUseCase {
     @Override
     public EventTicket createEventTicket(Long eventId, CreateEventTicketRequestDTO req) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(()-> new DataNotFoundException("Event with ID " + eventId + " not found !"));
+                .orElseThrow(()-> new EventNotFoundException(eventId));
 
         EventTicket newEventTicket = req.toEntity(event);
         return eventTicketRepository.save(newEventTicket);

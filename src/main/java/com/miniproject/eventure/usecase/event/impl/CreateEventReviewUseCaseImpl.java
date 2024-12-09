@@ -1,7 +1,8 @@
 package com.miniproject.eventure.usecase.event.impl;
 
-import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
+import com.miniproject.eventure.common.exeptions.EventNotFoundException;
+import com.miniproject.eventure.common.exeptions.UserNotFoundException;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventReview;
 import com.miniproject.eventure.entity.user.User;
@@ -34,10 +35,10 @@ public class CreateEventReviewUseCaseImpl implements CreateEventReviewUseCase {
         }
 
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(()-> new DataNotFoundException("Event ID not found !"));
+                .orElseThrow(()-> new EventNotFoundException(eventId));
 
         User user = userRepository.findById(req.getUserId())
-                .orElseThrow(()-> new DataNotFoundException("User Id not found !"));
+                .orElseThrow(()-> new UserNotFoundException(req.getUserId()));
 
         EventReview newEventReview = new EventReview();
         newEventReview.setEvent(event);

@@ -42,13 +42,4 @@ public class VoucherService {
         } while (voucherRepository.existsByCode(voucherCode));
         return voucherCode;
     }
-
-    public OffsetDateTime calculateExpiryDate(String voucherDuration) {
-        if (voucherDuration.isEmpty()) {
-            return null;
-        }
-        Duration duration = Duration.parse(voucherDuration);
-
-        return OffsetDateTime.now().plus(duration);
-    }
 }

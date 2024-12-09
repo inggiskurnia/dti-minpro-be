@@ -1,6 +1,6 @@
 package com.miniproject.eventure.usecase.event.impl;
 
-import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventOrganizerNotFoundException;
 import com.miniproject.eventure.entity.event.EventOrganizer;
 import com.miniproject.eventure.infrastructure.event.dto.GetEventOrganizerResponseDTO;
 import com.miniproject.eventure.infrastructure.event.repository.EventOrganizerRepository;
@@ -16,7 +16,7 @@ public class GetEventOrganizerUseCaseImpl implements GetEventOrganizerUseCase {
     @Override
     public GetEventOrganizerResponseDTO getEventOrganizerById(Long eventOrganizerID) {
         EventOrganizer eventOrganizer = eventOrganizerRepository.findById(eventOrganizerID)
-                .orElseThrow(()-> new DataNotFoundException("Event organizer with Id " + eventOrganizerID + " not found !"));
+                .orElseThrow(()-> new EventOrganizerNotFoundException(eventOrganizerID));
 
         return new GetEventOrganizerResponseDTO(eventOrganizer);
     }

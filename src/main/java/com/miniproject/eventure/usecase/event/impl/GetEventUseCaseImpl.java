@@ -1,6 +1,7 @@
 package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventNotFoundException;
 import com.miniproject.eventure.common.utils.PaginationInfo;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.infrastructure.event.dto.GetPaginatedEventResponseDTO;
@@ -25,7 +26,7 @@ public class GetEventUseCaseImpl implements GetEventUseCase {
 
     @Override
     public Event getEventById(Long eventId) {
-        return eventRepository.findById(eventId).orElseThrow(()-> new DataNotFoundException("Event not found !"));
+        return eventRepository.findById(eventId).orElseThrow(()-> new EventNotFoundException(eventId));
     }
 
     @Override

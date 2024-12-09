@@ -1,13 +1,11 @@
 package com.miniproject.eventure.infrastructure.user.controller;
 
 import com.miniproject.eventure.common.responses.ApiResponse;
+import com.miniproject.eventure.infrastructure.user.dto.CreateUserPointsRequestDTO;
 import com.miniproject.eventure.infrastructure.user.dto.CreateUserRequestDTO;
 import com.miniproject.eventure.infrastructure.user.dto.CreateUserVoucherRequestDTO;
 import com.miniproject.eventure.infrastructure.user.dto.UpdateUserRequestDTO;
-import com.miniproject.eventure.usecase.user.CreateUserUseCase;
-import com.miniproject.eventure.usecase.user.CreateUserVoucherUseCase;
-import com.miniproject.eventure.usecase.user.GetUserUseCase;
-import com.miniproject.eventure.usecase.user.UpdateUserUseCase;
+import com.miniproject.eventure.usecase.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +26,9 @@ public class UserController {
 
     @Autowired
     CreateUserVoucherUseCase createUserVoucherUseCase;
+
+    @Autowired
+    CreateUserPointsUseCase createUserPointsUseCase;
 
     @GetMapping
     public ResponseEntity<?> getUser() {
@@ -52,5 +53,10 @@ public class UserController {
     @PostMapping("/voucher")
     public ResponseEntity<?> createUseVoucher(@RequestBody CreateUserVoucherRequestDTO req){
         return ApiResponse.success(HttpStatus.OK.value(), "Create user voucher success", createUserVoucherUseCase.createUserVoucher(req));
+    }
+
+    @PostMapping("/points")
+    public ResponseEntity<?> createUserPoints(@RequestBody CreateUserPointsRequestDTO req){
+        return ApiResponse.success(HttpStatus.OK.value(), "Create user points success", createUserPointsUseCase.createUserPoints(req));
     }
 }

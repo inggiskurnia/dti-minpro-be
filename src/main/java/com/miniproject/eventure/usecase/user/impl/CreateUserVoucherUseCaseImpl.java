@@ -2,8 +2,8 @@ package com.miniproject.eventure.usecase.user.impl;
 
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.common.exeptions.UserNotFoundException;
-import com.miniproject.eventure.common.exeptions.UserVoucherNotFoundException;
 import com.miniproject.eventure.common.exeptions.VoucherNotFoundException;
+import com.miniproject.eventure.common.utils.ExpiryDate;
 import com.miniproject.eventure.common.utils.VoucherService;
 import com.miniproject.eventure.entity.user.User;
 import com.miniproject.eventure.entity.user.UserVoucher;
@@ -31,7 +31,7 @@ public class CreateUserVoucherUseCaseImpl implements CreateUserVoucherUseCase {
     UserVoucherRepository userVoucherRepository;
 
     @Autowired
-    VoucherService voucherService;
+    ExpiryDate expiryDate;
 
     @Override
     public UserVoucher createUserVoucher(CreateUserVoucherRequestDTO req) {
@@ -46,7 +46,7 @@ public class CreateUserVoucherUseCaseImpl implements CreateUserVoucherUseCase {
         Voucher voucher = voucherRepository.findById(req.getVoucherId())
                 .orElseThrow(VoucherNotFoundException::new);
 
-        OffsetDateTime expiryAt = voucherService.calculateExpiryDate(voucher.getValidityPeriod());
+        OffsetDateTime expiryAt = expiryDate.calculateExpiryDate(voucher.getValidityPeriod());
 
         return userVoucherRepository.save(req.toEntity(user, voucher, expiryAt));
     }

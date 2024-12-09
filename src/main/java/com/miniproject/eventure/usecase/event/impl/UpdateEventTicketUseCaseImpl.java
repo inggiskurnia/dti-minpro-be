@@ -1,6 +1,8 @@
 package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventTicketNotFoundException;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventTicket;
 import com.miniproject.eventure.infrastructure.event.dto.UpdateEventTicketRequestDTO;
@@ -22,10 +24,10 @@ public class UpdateEventTicketUseCaseImpl implements UpdateEventTicketUseCase {
     @Override
     public EventTicket updateEventTicket(Long eventId, Long ticketId, UpdateEventTicketRequestDTO req) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(()-> new DataNotFoundException("Event with ID " + eventId + " not found !"));
+                .orElseThrow(()-> new EventNotFoundException(eventId));
 
         EventTicket eventTicket = eventTicketRepository.findById(ticketId)
-                .orElseThrow((()-> new DataNotFoundException("Ticket with ID " + ticketId + " not found !")));
+                .orElseThrow((()-> new EventTicketNotFoundException(ticketId)));
 
         if (req.getTicketName() != null){
             eventTicket.setTicketName(req.getTicketName());

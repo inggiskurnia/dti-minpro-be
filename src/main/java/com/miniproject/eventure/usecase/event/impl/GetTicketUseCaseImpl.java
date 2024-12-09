@@ -1,6 +1,7 @@
 package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventTicketNotFoundException;
 import com.miniproject.eventure.entity.event.EventTicket;
 import com.miniproject.eventure.infrastructure.event.dto.GetEventTicketResponseDTO;
 import com.miniproject.eventure.infrastructure.event.repository.EventTicketRepository;
@@ -21,7 +22,7 @@ public class GetTicketUseCaseImpl implements GetEventTicketUseCase {
 
         List<EventTicket> eventTickets = eventTicketRepository.findByEventEventId(eventId);
         if (eventTickets.isEmpty()){
-            throw new DataNotFoundException("Ticket not found !");
+            throw new EventTicketNotFoundException(eventId);
         }
 
         return eventTickets.stream().map(GetEventTicketResponseDTO::new).toList();

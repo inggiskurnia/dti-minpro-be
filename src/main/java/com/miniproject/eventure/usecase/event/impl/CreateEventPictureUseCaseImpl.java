@@ -1,6 +1,7 @@
 package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventNotFoundException;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventPicture;
 import com.miniproject.eventure.infrastructure.event.dto.BulkCreateEventPictureRequestDTO;
@@ -25,7 +26,7 @@ public class CreateEventPictureUseCaseImpl implements CreateEventPictureUseCase 
     public List<EventPicture> bulkCreateEventPicture(Long eventId, BulkCreateEventPictureRequestDTO req) {
 
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(()-> new DataNotFoundException("Event with ID " + eventId + "not found !"));
+                .orElseThrow(()-> new EventNotFoundException(eventId));
 
         List<EventPicture> eventPictures = req.getEventPictureUrls().stream() .map(dto -> dto.toEntity(event)).toList();
 

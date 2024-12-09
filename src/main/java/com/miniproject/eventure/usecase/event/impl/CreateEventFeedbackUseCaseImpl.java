@@ -2,6 +2,8 @@ package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
+import com.miniproject.eventure.common.exeptions.EventNotFoundException;
+import com.miniproject.eventure.common.exeptions.UserNotFoundException;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventFeedback;
 import com.miniproject.eventure.entity.user.User;
@@ -37,10 +39,10 @@ public class CreateEventFeedbackUseCaseImpl implements CreateEventFeedbackUseCas
         EventFeedback newEventFeedback = new EventFeedback();
 
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(()-> new DataNotFoundException("Event with Id "+ eventId + " not found !"));
+                .orElseThrow(()-> new EventNotFoundException(eventId));
 
         User user = userRepository.findById(userId)
-                .orElseThrow(()-> new DataNotFoundException("User with Id" + userId + "not found"));
+                .orElseThrow(()-> new UserNotFoundException(userId));
 
         newEventFeedback.setEvent(event);
         newEventFeedback.setUser(user);

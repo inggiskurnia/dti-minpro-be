@@ -1,6 +1,7 @@
 package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventFeedbackNotFoundException;
 import com.miniproject.eventure.common.utils.PaginationInfo;
 import com.miniproject.eventure.entity.event.EventFeedback;
 import com.miniproject.eventure.infrastructure.event.dto.GetPaginatedEventFeedbackResponseDTO;
@@ -25,14 +26,15 @@ public class GetEventFeedbackUseCaseImpl implements GetEventFeedbackUseCase {
 
     @Override
     public EventFeedback getEventFeedbackById(Long eventFeedbackId) {
-        return eventFeedbackRepository.findById(eventFeedbackId).orElseThrow(()-> new DataNotFoundException("Event feedback with Id " + eventFeedbackId + " not found !"));
+        return eventFeedbackRepository.findById(eventFeedbackId)
+                .orElseThrow(EventFeedbackNotFoundException::new);
     }
 
     @Override
     public PaginationInfo<GetPaginatedEventFeedbackResponseDTO> getPaginatedEvent(Long eventId, PageRequest pageRequest) {
         Page<EventFeedback> eventFeedbacksPage = eventFeedbackRepository.findByEventEventId(eventId,pageRequest);
         if (eventFeedbacksPage.isEmpty()){
-            throw new DataNotFoundException("Feedback for event Id" + eventId + " not found !");
+            throw new EventFeedbackNotFoundException();
         }
         List<GetPaginatedEventFeedbackResponseDTO> eventFeedbacksDTO = eventFeedbacksPage.stream().map(GetPaginatedEventFeedbackResponseDTO::new).toList();
 

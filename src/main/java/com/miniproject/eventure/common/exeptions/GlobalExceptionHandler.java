@@ -59,6 +59,21 @@ public class GlobalExceptionHandler {
         return ApiResponse.failed(ex.getMessage());
     }
 
+    @ExceptionHandler(EventCategoryNotFoundException.class)
+    public ResponseEntity<?> handleEventCategoryNotFoundException(EventCategoryNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(EventFeedbackNotFoundException.class)
+    public ResponseEntity<?> handleEventFeedbackNotFoundException(EventFeedbackNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(EventOrganizerNotFoundException.class)
+    public ResponseEntity<?> handleEventOrganizerNotFoundException(EventOrganizerNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
     @ExceptionHandler(InvoiceNotFoundException.class)
     public ResponseEntity<?> handleInvoiceNotFoundException(InvoiceNotFoundException ex){
         return ApiResponse.failed(ex.getMessage());
@@ -71,6 +86,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(VoucherTypeNotFoundException.class)
     public ResponseEntity<?> handleVoucherTypeNotFoundException(VoucherTypeNotFoundException ex){
+        return ApiResponse.failed(ex.getMessage());
+    }
+
+    @ExceptionHandler(CityNotFoundException.class)
+    public ResponseEntity<?> handleCityNotFoundException(CityNotFoundException ex){
         return ApiResponse.failed(ex.getMessage());
     }
 

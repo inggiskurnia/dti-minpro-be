@@ -1,7 +1,9 @@
 package com.miniproject.eventure.usecase.event.impl;
 
+import com.miniproject.eventure.common.exeptions.CityNotFoundException;
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
+import com.miniproject.eventure.common.exeptions.UserNotFoundException;
 import com.miniproject.eventure.entity.event.EventOrganizer;
 import com.miniproject.eventure.entity.geography.City;
 import com.miniproject.eventure.entity.user.User;
@@ -34,18 +36,11 @@ public class CreateEventOrganizerUseCaseImpl implements CreateEventOrganizerUseC
         }
 
         User user = userRepository.findById(req.getUserId())
-                .orElseThrow(()-> new DataNotFoundException("User ID " + req.getUserId() + " not found !"));
+                .orElseThrow(()-> new UserNotFoundException(req.getUserId()));
 
         City city = cityRepository.findById(req.getCityId())
-                .orElseThrow(()-> new DataNotFoundException("City ID " + req.getCityId() + " not found !"));
+                .orElseThrow(()-> new CityNotFoundException(req.getCityId()));
 
-        EventOrganizer newEventOrganizer = new EventOrganizer();
-        newEventOrganizer.setUser(user);
-        newEventOrganizer.setName(req.getEventOrganizerName());
-        newEventOrganizer.setCity(city);
-        newEventOrganizer.setDescription(req.getDescription());
-        newEventOrganizer.setProfilePictureLink(req.getProfilePictureLink());
-
-        return eventOrganizerRepository.save(newEventOrganizer);
+        return eventOrganizerRepository.save(req.toEntity(user, city));
     }
 }
