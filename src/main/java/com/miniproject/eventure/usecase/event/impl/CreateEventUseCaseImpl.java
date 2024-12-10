@@ -1,6 +1,9 @@
 package com.miniproject.eventure.usecase.event.impl;
 
+import com.miniproject.eventure.common.exeptions.CityNotFoundException;
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.EventCategoryNotFoundException;
+import com.miniproject.eventure.common.exeptions.UserNotFoundException;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventCategory;
 import com.miniproject.eventure.entity.geography.City;
@@ -13,8 +16,6 @@ import com.miniproject.eventure.infrastructure.user.repository.UserRepository;
 import com.miniproject.eventure.usecase.event.CreateEventUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CreateEventUseCaseImpl implements CreateEventUseCase {
@@ -36,15 +37,15 @@ public class CreateEventUseCaseImpl implements CreateEventUseCase {
         Event newEvent = req.toEntity();
 
         User user = userRepository.findById(req.getOrganizerId())
-                .orElseThrow(() -> new DataNotFoundException("User not found !"));
-        newEvent.setOrganizerId(user);
+                .orElseThrow(() -> new UserNotFoundException(req.getOrganizerId()));
+        newEvent.setOrganizer(user);
 
         EventCategory eventCategory = eventCategoryRepository.findById(req.getEventCategoryId())
-                .orElseThrow(() -> new DataNotFoundException("Event category ID not found !"));
-        newEvent.setEventCategoryId(eventCategory);
+                .orElseThrow(() -> new EventCategoryNotFoundException(req.getEventCategoryId()));
+        newEvent.setEventCategory(eventCategory);
 
         City city = cityRepository.findById(req.getCityId())
-                .orElseThrow(() -> new DataNotFoundException("City ID not found !"));
+                .orElseThrow(() -> new CityNotFoundException(req.getCityId()));
         newEvent.setCityId(city);
 
         return eventRepository.save(newEvent);

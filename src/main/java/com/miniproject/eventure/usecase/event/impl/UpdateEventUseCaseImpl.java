@@ -1,6 +1,6 @@
 package com.miniproject.eventure.usecase.event.impl;
 
-import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.*;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventCategory;
 import com.miniproject.eventure.entity.geography.City;
@@ -35,12 +35,12 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
     public Event updateEvent(Long id, UpdateEventRequestDTO req) {
 
         Event event = eventRepository.findById(id)
-                .orElseThrow(()-> new DataNotFoundException("Event Id not found !"));
+                .orElseThrow(()-> new EventNotFoundException(id));
 
         if(req.getOrganizerId() != null){
             User organizer = userRepository.findById(req.getOrganizerId())
-                    .orElseThrow(()-> new DataNotFoundException("Organizer Id not found"));
-            event.setOrganizerId(organizer);
+                    .orElseThrow(()-> new EventOrganizerNotFoundException(req.getOrganizerId()));
+            event.setOrganizer(organizer);
         }
         if (req.getName() != null){
             event.setName(req.getName());
@@ -53,12 +53,12 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
         }
         if (req.getEventCategoryId() != null) {
             EventCategory eventCategory = eventCategoryRepository.findById(req.getEventCategoryId())
-                    .orElseThrow(() -> new DataNotFoundException("Event category Id not found"));
-            event.setEventCategoryId(eventCategory);
+                    .orElseThrow(() -> new EventCategoryNotFoundException(req.getEventCategoryId()));
+            event.setEventCategory(eventCategory);
         }
         if (req.getCityId() != null){
             City city = cityRepository.findById(req.getCityId())
-                    .orElseThrow(()-> new DataNotFoundException("City Id not found"));
+                    .orElseThrow(()-> new CityNotFoundException(req.getCityId()));
             event.setCityId(city);
         }
         if (req.getLocationDetail() != null){

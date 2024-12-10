@@ -1,30 +1,31 @@
-package com.miniproject.eventure.entity.ticket;
-
-import lombok.Getter;
-import lombok.Setter;
+package com.miniproject.eventure.entity.voucher;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.OffsetDateTime;
 
-@Setter
-@Getter
 @Entity
-@Table(name = "ticket_types")
-public class TicketType {
-
+@Table(name = "voucher_types")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class VoucherType {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_types_id_gen")
-    @SequenceGenerator(name = "ticket_types_id_gen", sequenceName = "ticket_types_id_seq", allocationSize = 1)
-    @Column(name = "ticket_type_id")
-    private Long ticketTypeId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "voucher_types_id_gen")
+    @SequenceGenerator(name = "voucher_types_id_gen", sequenceName = "voucher_types_voucher_type_id_seq", allocationSize = 1)
+    @Column(name = "voucher_type_id")
+    private Long voucherTypeId;
 
     @NotNull
-    @Size(max = 100)
-    @Column(nullable = false, length = 100)
+    @Column(name = "status_name")
     private String name;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;
@@ -51,4 +52,3 @@ public class TicketType {
         deletedAt = OffsetDateTime.now();
     }
 }
-

@@ -16,7 +16,7 @@ public class EventPicture {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_pictures_id_gen")
-    @SequenceGenerator(name = "event_pictures_id_gen", sequenceName = "event_pictures_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "event_pictures_id_gen", sequenceName = "event_pictures_event_picture_id_seq", allocationSize = 1)
     @Column(name = "event_picture_id")
     private Long eventPictureId;
 
@@ -26,8 +26,8 @@ public class EventPicture {
     private Event event;
 
     @NotNull
-    @Column(name = "link_picture", nullable = false, columnDefinition = "TEXT")
-    private String linkPicture;
+    @Column(name = "event_picture_url", nullable = false, columnDefinition = "TEXT")
+    private String eventPictureUrl;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;
