@@ -3,6 +3,7 @@ package com.miniproject.eventure.infrastructure.event.controller;
 import com.miniproject.eventure.common.responses.ApiResponse;
 import com.miniproject.eventure.infrastructure.event.dto.*;
 import com.miniproject.eventure.usecase.event.*;
+import com.miniproject.eventure.usecase.voucher.GetVoucherUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -14,53 +15,61 @@ import org.springframework.web.bind.annotation.*;
 public class EventController {
 
     @Autowired
-    private CreateEventUseCase createEventUseCase;
+    CreateEventUseCase createEventUseCase;
 
     @Autowired
-    private GetEventUseCase getEventUseCase;
+    GetEventUseCase getEventUseCase;
 
     @Autowired
-    private UpdateEventUseCase updateEventUseCase;
+    UpdateEventUseCase updateEventUseCase;
 
     @Autowired
-    private CreateEventReviewUseCase createEventReviewUseCase;
+    CreateEventReviewUseCase createEventReviewUseCase;
 
     @Autowired
-    private GetEventReviewUseCase getEventReviewUseCase;
+    GetEventReviewUseCase getEventReviewUseCase;
 
     @Autowired
-    private CreateEventFeedbackUseCase createEventFeedbackUseCase;
+    CreateEventFeedbackUseCase createEventFeedbackUseCase;
 
     @Autowired
-    private GetEventFeedbackUseCase getEventFeedbackUseCase;
+    GetEventFeedbackUseCase getEventFeedbackUseCase;
 
     @Autowired
-    private CreateEventPictureUseCase createEventPictureUseCase;
+    CreateEventPictureUseCase createEventPictureUseCase;
 
     @Autowired
-    private GetEventPictureUseCase getEventPictureUseCase;
+    GetEventPictureUseCase getEventPictureUseCase;
 
     @Autowired
-    private CreateEventOrganizerUseCase createEventOrganizerUseCase;
+    CreateEventOrganizerUseCase createEventOrganizerUseCase;
 
     @Autowired
-    private GetEventOrganizerUseCase getEventOrganizerUseCase;
+    GetEventOrganizerUseCase getEventOrganizerUseCase;
 
     @Autowired
-    private CreateEventTicketUseCase createEventTicketUseCase;
+    CreateEventTicketUseCase createEventTicketUseCase;
 
     @Autowired
-    private GetEventTicketUseCase getEventTicketUseCase;
+    GetEventTicketUseCase getEventTicketUseCase;
 
     @Autowired
-    private UpdateEventTicketUseCase updateEventTicketUseCase;
+    UpdateEventTicketUseCase updateEventTicketUseCase;
+
+    @Autowired
+    GetVoucherUseCase getVoucherUseCase;
+
+    @Autowired
+    GetEventCategoryUseCase getEventCategoryUseCase;
 
     @GetMapping
     public ResponseEntity<?> getEvent(
             @RequestParam(required = false, defaultValue = "10") int limit,
-            @RequestParam(required = false, defaultValue = "0") int page) {
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false) Long eventCategoryId,
+            @RequestParam(required = false) Long cityId) {
         PageRequest pageRequest = PageRequest.of(page, limit);
-        return ApiResponse.success(HttpStatus.OK.value(), "Get event page success", getEventUseCase.getPaginatedEvent(pageRequest));
+        return ApiResponse.success(HttpStatus.OK.value(), "Get event page success", getEventUseCase.getPaginatedEvent(pageRequest, eventCategoryId, cityId));
     }
 
     @GetMapping("/all")
@@ -83,6 +92,15 @@ public class EventController {
             @PathVariable Long eventId,
             @RequestBody UpdateEventRequestDTO req) {
         return ApiResponse.success(HttpStatus.OK.value(), "Update event success", updateEventUseCase.updateEvent(eventId, req));
+    }
+
+    @GetMapping("/event/category")
+    public ResponseEntity<?> getEventCategory(@RequestParam(required = false) String query){
+//        if (!query.isEmpty()){
+//            return ApiResponse.success(HttpStatus.OK.value(), "Get event category success",getEventCategoryUseCase.searchEventCategory(query));
+//        }else{
+            return ApiResponse.success(HttpStatus.OK.value(), "Get event category success", getEventCategoryUseCase.getAllEventCategory());
+//        }
     }
 
     @GetMapping("/{eventId}/review")
@@ -159,4 +177,10 @@ public class EventController {
             @RequestBody UpdateEventTicketRequestDTO req) {
         return ApiResponse.success(HttpStatus.OK.value(), "Update event ticket success !", updateEventTicketUseCase.updateEventTicket(eventId, ticketId, req));
     }
+
+    @GetMapping("/{eventId}/voucher")
+    public ResponseEntity<?> getVoucherByEvent(@PathVariable Long eventId){
+        return ApiResponse.success(HttpStatus.OK.value(), "Get event voucher success", getVoucherUseCase.getEventVoucher(eventId));
+    }
 }
+

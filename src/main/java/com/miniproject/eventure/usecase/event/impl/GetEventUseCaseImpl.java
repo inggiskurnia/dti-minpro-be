@@ -10,6 +10,7 @@ import com.miniproject.eventure.usecase.event.GetEventUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +31,20 @@ public class GetEventUseCaseImpl implements GetEventUseCase {
     }
 
     @Override
-    public PaginationInfo<GetPaginatedEventResponseDTO> getPaginatedEvent(PageRequest pageRequest) {
-        Page<Event> eventsPage = eventRepository.findAll(pageRequest);
+    public PaginationInfo<GetPaginatedEventResponseDTO> getPaginatedEvent(PageRequest pageRequest, Long eventCategoryId, Long cityId) {
+        Specification<Event> spec = Specification.where(null);
+
+        if (eventCategoryId != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.equal(root.get("eventCategory").get("eventCategoryId"), eventCategoryId));
+        }
+
+        if (cityId != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.equal(root.get("city").get("cityId"), cityId));
+        }
+
+        Page<Event> eventsPage = eventRepository.findAll(spec, pageRequest);
         List<GetPaginatedEventResponseDTO> eventsDTO = eventsPage.stream().map(GetPaginatedEventResponseDTO::new).toList();
         return new PaginationInfo<>(eventsPage, eventsDTO);
     }

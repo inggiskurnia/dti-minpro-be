@@ -21,7 +21,7 @@ public class PaginationInfo<T> {
 
     public PaginationInfo(Page<?> page, List<T> content){
         this.currentPage = page.getNumber();
-        this.totalPages = page.getSize();
+        this.totalPages = page.getTotalPages();
         this.totalElements = page.getTotalElements();
         this.isFirstPage = page.isFirst();
         this.isLastPage = page.isLast();

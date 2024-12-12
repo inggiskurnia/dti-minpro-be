@@ -11,5 +11,5 @@ import java.util.List;
 public interface GetEventUseCase {
     List<Event> getAllEvent();
     Event getEventById(Long eventId);
-    PaginationInfo<GetPaginatedEventResponseDTO> getPaginatedEvent(PageRequest pageRequest);
+    PaginationInfo<GetPaginatedEventResponseDTO> getPaginatedEvent(PageRequest pageRequest, Long eventCategoryId, Long cityId);
 }

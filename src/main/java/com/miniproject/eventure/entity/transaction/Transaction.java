@@ -32,7 +32,7 @@ public class Transaction {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "event_tickets_id", nullable = false)
+    @JoinColumn(name = "event_ticket_id", nullable = false)
     private EventTicket eventTicket;
 
     @NotNull
