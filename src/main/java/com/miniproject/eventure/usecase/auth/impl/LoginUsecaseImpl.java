@@ -30,7 +30,7 @@ public class LoginUsecaseImpl implements LoginUsecase {
     @Override
     public TokenPairResponseDTO authenticateUser(LoginRequestDTO req) {
         try {
-            log.info("Loggingin with");
+            log.info("Login with");
             log.info(req.getEmail());
             log.info(req.getPassword());
             Authentication authentication = authenticationManager.authenticate(

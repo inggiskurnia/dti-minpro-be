@@ -4,6 +4,7 @@ import com.miniproject.eventure.entity.geography.City;
 import com.miniproject.eventure.entity.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,19 +23,32 @@ public class EventOrganizer {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "users_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
+
+    @NotNull
+    @Column(nullable = false)
+    private String email;
 
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
 
-    @Column(name = "description")
+    @Column
     private String description;
+
+    @Column
+    private String address;
+
+    @Column(name = "phone_number")
+    private Long phoneNumber;
+
+    @Column
+    private String web;
 
     @Column(name = "profile_picture_link")
     private String profilePictureLink;

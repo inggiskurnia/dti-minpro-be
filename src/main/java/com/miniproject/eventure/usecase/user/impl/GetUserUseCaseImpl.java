@@ -30,4 +30,13 @@ public class GetUserUseCaseImpl implements GetUserUseCase {
         }
         return foundUser;
     }
+
+    @Override
+    public Optional<User> getReferralCode(String referralCode) {
+        var user = userRepository.findByReferralCode(referralCode);
+        if (user.isEmpty()) {
+            throw new DataNotFoundException("User with referral code not found!");
+        }
+        return user;
+    }
 }

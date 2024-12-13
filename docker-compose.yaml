@@ -29,7 +29,18 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"  # Expose PostgreSQL port for local access
 
+  redis:
+    container_name: eventure-cache
+    image: redis:alpine
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - ${REDIS_PORT}:6379
+    command: [ "redis-server", "--requirepass", "${REDIS_PASSWORD}" ]
+
 # Volumes to persist PostgreSQL data
 volumes:
   postgres_data:
     driver: local
+  redis:

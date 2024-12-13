@@ -3,7 +3,7 @@ package com.miniproject.eventure.common.utils;
 import com.miniproject.eventure.infrastructure.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
@@ -16,7 +16,7 @@ public class ReferralCodeGenerator {
         this.userRepository = userRepository;
     }
 
-    public String generateReferralCode(String fullName, LocalDateTime birthdate) {
+    public String generateReferralCode(String fullName, OffsetDateTime birthdate) {
         String baseCode = createBaseCode(fullName, birthdate);
         String uniqueCode = baseCode;
 
@@ -26,7 +26,7 @@ public class ReferralCodeGenerator {
         return uniqueCode;
     }
 
-    private static String createBaseCode(String fullName, LocalDateTime birthdate) {
+    private static String createBaseCode(String fullName, OffsetDateTime birthdate) {
         String paddedName = fullName.replaceAll(" ", "");
         if (paddedName.length() < 5) {
             paddedName = String.format("%-5s", paddedName).replace(' ', 'X');

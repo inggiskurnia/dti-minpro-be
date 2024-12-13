@@ -46,7 +46,7 @@ public class TokenGenerationUsecaseImpl implements TokenGenerationUsecase {
                 .expiresAt(now.plusSeconds(expiry))
                 .subject(email)
                 .claim("scope", scope)
-                .claim("userId", user.getId())
+                .claim("userId", user.getUserId())
                 .claim("type", tokenType.name())
                 .build();
 
