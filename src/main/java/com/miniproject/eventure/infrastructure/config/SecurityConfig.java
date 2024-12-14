@@ -37,7 +37,8 @@ public class SecurityConfig {
             GetUserAuthDetailsUsecase getUserAuthDetailsUsecase,
             JwtConfigProperties jwtConfigProperties,
             PasswordEncoder passwordEncoder,
-            TokenBlacklist tokenBlacklistFilter) {
+            TokenBlacklist tokenBlacklistFilter
+    ) {
         this.getUserAuthDetailsUsecase = getUserAuthDetailsUsecase;
         this.jwtConfigProperties = jwtConfigProperties;
         this.passwordEncoder = passwordEncoder;
@@ -61,7 +62,18 @@ public class SecurityConfig {
                         // Define public routes
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers("/api/v1/auth/login").permitAll()
-                        .requestMatchers("/api/v1/users/register").permitAll()
+                        .requestMatchers("/api/v1/user").permitAll()
+                        .requestMatchers("/api/v1/geo/province").permitAll()
+                        .requestMatchers("/api/v1/geo/city").permitAll()
+                        .requestMatchers("/api/v1/demo").permitAll()
+
+                        // Only for checking
+                        .requestMatchers("/api/v1/user/{id}").permitAll()
+                        .requestMatchers("/api/v1/voucher").permitAll()
+                        .requestMatchers("/api/v1/event").permitAll()
+                        .requestMatchers("/api/v1/event/organizer").permitAll()
+                        .requestMatchers("/api/v1/user/referral/{code}").permitAll()
+
 
                         // Define rest of the routes to be private
                         .anyRequest().authenticated())

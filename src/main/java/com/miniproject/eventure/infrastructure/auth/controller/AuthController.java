@@ -24,8 +24,12 @@ public class AuthController {
     private final TokenRefreshUsecase tokenRefreshUsecase;
     private final LogoutUsecase logoutUsecase;
 
-    public AuthController(LoginUsecase loginUsecase, TokenRefreshUsecase tokenRefreshUsecase,
-                          com.miniproject.eventure.usecase.auth.TokenBlacklistUsecase tokenBlacklistUsecase, LogoutUsecase logoutUsecase) {
+    public AuthController(
+            LoginUsecase loginUsecase,
+            TokenRefreshUsecase tokenRefreshUsecase,
+            com.miniproject.eventure.usecase.auth.TokenBlacklistUsecase tokenBlacklistUsecase,
+            LogoutUsecase logoutUsecase
+    ) {
         this.loginUsecase = loginUsecase;
         this.tokenRefreshUsecase = tokenRefreshUsecase;
         this.logoutUsecase = logoutUsecase;

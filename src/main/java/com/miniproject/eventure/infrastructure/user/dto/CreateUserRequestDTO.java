@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +33,9 @@ public class CreateUserRequestDTO {
     @NotNull
     private boolean isOrganizer;
 
+    @NotNull
+    private OffsetDateTime birthdate;
+
     public User toEntity(){
         User user = new User();
         user.setFullName(fullName);
@@ -39,6 +43,7 @@ public class CreateUserRequestDTO {
         user.setPassword(password);
         Set<Role> roles = new HashSet<>();
         user.setRoles(roles);
+        user.setBirthdate(birthdate);
         return user;
     }
 

@@ -15,7 +15,10 @@ public class LogoutUsecaseImpl implements LogoutUsecase {
     private final TokenBlacklistUsecase TokenBlacklistUsecase;
 
 
-    public LogoutUsecaseImpl(JwtDecoder jwtDecoder, com.miniproject.eventure.usecase.auth.TokenBlacklistUsecase tokenBlacklistUsecase) {
+    public LogoutUsecaseImpl(
+            JwtDecoder jwtDecoder,
+            com.miniproject.eventure.usecase.auth.TokenBlacklistUsecase tokenBlacklistUsecase
+    ) {
         this.jwtDecoder = jwtDecoder;
         TokenBlacklistUsecase = tokenBlacklistUsecase;
     }

@@ -56,6 +56,11 @@ public class UserController {
         return ApiResponse.success(HttpStatus.OK.value(), "Update user success !", updateUserUseCase.updateUser(id, req));
     }
 
+    @GetMapping("/referral/{code}")
+    public ResponseEntity<?> getReferralCode(@PathVariable("code") String referralCode) {
+        return ApiResponse.success(HttpStatus.OK.value(), "User with referral code found!", getUserUseCase.getReferralCode(referralCode));
+    }
+
     @PostMapping("/voucher")
     public ResponseEntity<?> createUsesVoucher(@RequestBody CreateUserVoucherRequestDTO req){
         return ApiResponse.success(HttpStatus.OK.value(), "Create user voucher success", createUserVoucherUseCase.createUserVoucher(req));

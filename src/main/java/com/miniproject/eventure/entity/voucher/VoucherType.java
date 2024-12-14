@@ -24,9 +24,6 @@ public class VoucherType {
     @Column(name = "status_name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
-
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;
 
