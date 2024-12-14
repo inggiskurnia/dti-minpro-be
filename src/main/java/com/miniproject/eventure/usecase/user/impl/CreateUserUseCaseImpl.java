@@ -1,6 +1,5 @@
 package com.miniproject.eventure.usecase.user.impl;
 
-import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.common.utils.ReferralCodeGenerator;
 import com.miniproject.eventure.entity.geography.City;

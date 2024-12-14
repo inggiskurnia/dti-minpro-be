@@ -4,5 +4,5 @@ import com.miniproject.eventure.entity.user.UserPoints;
 import com.miniproject.eventure.infrastructure.user.dto.CreateUserPointsRequestDTO;
 
 public interface CreateUserPointsUseCase {
-    UserPoints createUserPoints(CreateUserPointsRequestDTO req);
+    UserPoints createUserPoints(Long userId, CreateUserPointsRequestDTO req);
 }

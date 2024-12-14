@@ -1,8 +1,11 @@
 package com.miniproject.eventure.infrastructure.user.dto;
 
+import com.miniproject.eventure.entity.user.User;
 import com.miniproject.eventure.entity.user.UserPoints;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.time.OffsetDateTime;
 
 
 @Data
@@ -10,18 +13,18 @@ import lombok.Data;
 public class CreateUserPointsRequestDTO {
 
     @NotNull
-    private Long userId;
-
-    @NotNull
-    private Double totalAmount;
-
-    private Long transactionId;
+    private Double points;
 
     private String validityPeriod;
 
-    public UserPoints toEntity(){
+    public UserPoints toEntity(User user, OffsetDateTime expiryAt){
         UserPoints userPoints = new UserPoints();
-        userPoints.setTotalAmount(this.totalAmount);
+
+        userPoints.setUser(user);
+        userPoints.setPoints(this.points);
+        userPoints.setUsedPoints(0.0);
+        userPoints.setExpiredAt(expiryAt);
+
         return userPoints;
     }
 }

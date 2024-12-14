@@ -21,82 +21,82 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateRequestDataException.class)
     public ResponseEntity<?> handleDuplicateRequestDataException(DuplicateRequestDataException ex) {
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.CONFLICT.value(),ex.getMessage());
     }
 
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<?> handleDataNotFoundException(DataNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(EmptyRequestDataException.class)
     public ResponseEntity<?> handleEmptyRequestDataException(EmptyRequestDataException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.BAD_REQUEST.value(),ex.getMessage());
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(UserVoucherNotFoundException.class)
     public ResponseEntity<?> handleUserVoucherNotFoundException(UserVoucherNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(TransactionNotFoundException.class)
     public ResponseEntity<?> handleTransactionNotFoundException(TransactionNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(EventTicketNotFoundException.class)
     public ResponseEntity<?> handleEventTicketNotFoundException(EventTicketNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(EventNotFoundException.class)
     public ResponseEntity<?> handleEventNotFoundException(EventNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(EventCategoryNotFoundException.class)
     public ResponseEntity<?> handleEventCategoryNotFoundException(EventCategoryNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(EventFeedbackNotFoundException.class)
     public ResponseEntity<?> handleEventFeedbackNotFoundException(EventFeedbackNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(EventOrganizerNotFoundException.class)
     public ResponseEntity<?> handleEventOrganizerNotFoundException(EventOrganizerNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(InvoiceNotFoundException.class)
     public ResponseEntity<?> handleInvoiceNotFoundException(InvoiceNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(VoucherNotFoundException.class)
     public ResponseEntity<?> handleVoucherNotFoundException(VoucherNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(VoucherTypeNotFoundException.class)
     public ResponseEntity<?> handleVoucherTypeNotFoundException(VoucherTypeNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(CityNotFoundException.class)
     public ResponseEntity<?> handleCityNotFoundException(CityNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(StatusTypeNotFoundException.class)
     public ResponseEntity<?> StatusTypeNotFoundException(StatusTypeNotFoundException ex){
-        return ApiResponse.failed(ex.getMessage());
+        return ApiResponse.failed(HttpStatus.NO_CONTENT.value(), ex.getMessage());
     }
 
     @ExceptionHandler(AccessDeniedException.class)

@@ -9,7 +9,9 @@ import java.time.OffsetDateTime;
 @Data
 public class GetPaginatedEventResponseDTO {
     private Long eventId;
+    private Long organizerId;
     private String organizer;
+    private String organizerProfile;
     private String name;
     private String thumbnail;
     private BigDecimal startingPrice;
@@ -17,7 +19,9 @@ public class GetPaginatedEventResponseDTO {
 
     public GetPaginatedEventResponseDTO(Event event){
         this.eventId = event.getEventId();
-        this.organizer = event.getOrganizer().getFullName();
+        this.organizerId = event.getOrganizer().getEventOrganizerId();
+        this.organizer = event.getOrganizer().getName();
+        this.organizerProfile = event.getOrganizer().getProfilePictureLink();
         this.name = event.getName();
         this.thumbnail = event.getThumbnail();
         this.startingPrice = event.getStartingPrice();
