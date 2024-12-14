@@ -19,6 +19,12 @@ public class VoucherController {
     @Autowired
     GetVoucherUseCase getVoucherUseCase;
 
+
+    @GetMapping("/event/{eventId}")
+    public ResponseEntity<?> getVoucherByEvent(@PathVariable Long eventId) {
+        return ApiResponse.success(HttpStatus.OK.value(), "Get event voucher success", getVoucherUseCase.getEventVoucher(eventId));
+    }
+
     @PostMapping
     public ResponseEntity<?> createVoucher(@RequestBody CreateVoucherRequestDTO req){
         return ApiResponse.success(HttpStatus.OK.value(), "Create voucher success", createVoucherUseCase.createVoucher(req));

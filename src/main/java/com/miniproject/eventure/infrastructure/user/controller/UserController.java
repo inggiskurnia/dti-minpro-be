@@ -6,7 +6,6 @@ import com.miniproject.eventure.infrastructure.user.dto.CreateUserRequestDTO;
 import com.miniproject.eventure.infrastructure.user.dto.CreateUserVoucherRequestDTO;
 import com.miniproject.eventure.infrastructure.user.dto.UpdateUserRequestDTO;
 import com.miniproject.eventure.usecase.user.*;
-import com.miniproject.eventure.usecase.voucher.GetVoucherUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,7 @@
 package com.miniproject.eventure.usecase.user.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.entity.user.UserVoucher;
 import com.miniproject.eventure.infrastructure.user.dto.GetUserVoucherResponseDTO;
 import com.miniproject.eventure.infrastructure.user.repository.UserVoucherRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GetUserVoucherUseCaseImpl implements GetUserVoucherUseCase {

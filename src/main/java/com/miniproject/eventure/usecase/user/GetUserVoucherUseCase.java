@@ -7,3 +7,4 @@ import java.util.List;
 public interface GetUserVoucherUseCase {
     List<GetUserVoucherResponseDTO> getUserVoucher(Long userId);
 }
+

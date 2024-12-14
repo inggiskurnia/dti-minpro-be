@@ -1,7 +1,6 @@
 package com.miniproject.eventure.usecase.voucher.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
-import com.miniproject.eventure.common.exeptions.VoucherNotFoundException;
 import com.miniproject.eventure.entity.voucher.Voucher;
 import com.miniproject.eventure.infrastructure.voucher.dto.GetVoucherResponseDTO;
 import com.miniproject.eventure.infrastructure.voucher.repository.VoucherRepository;
@@ -18,8 +17,11 @@ public class GetVoucherUseCaseImpl implements GetVoucherUseCase {
 
     @Override
     public List<GetVoucherResponseDTO> getEventVoucher(Long eventId) {
-        List<Voucher> vouchers = voucherRepository.findByEventEventId(eventId)
-                .orElseThrow(()-> new DataNotFoundException("Voucher not found"));
+        List<Voucher> vouchers = voucherRepository.findByEventEventId(eventId);
+
+        if (vouchers.isEmpty()){
+            throw new DataNotFoundException("Voucher not found");
+        }
 
         return vouchers.stream().map(GetVoucherResponseDTO::new).toList();
     }

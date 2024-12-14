@@ -4,7 +4,9 @@ import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.EventNotFoundException;
 import com.miniproject.eventure.common.utils.PaginationInfo;
 import com.miniproject.eventure.entity.event.Event;
+import com.miniproject.eventure.infrastructure.event.dto.GetEventResponseDTO;
 import com.miniproject.eventure.infrastructure.event.dto.GetPaginatedEventResponseDTO;
+import com.miniproject.eventure.infrastructure.event.dto.SearchEventResponseDTO;
 import com.miniproject.eventure.infrastructure.event.repository.EventRepository;
 import com.miniproject.eventure.usecase.event.GetEventUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,18 @@ public class GetEventUseCaseImpl implements GetEventUseCase {
     }
 
     @Override
-    public Event getEventById(Long eventId) {
-        return eventRepository.findById(eventId).orElseThrow(()-> new EventNotFoundException(eventId));
+    public List<SearchEventResponseDTO> searchEventByName(String query) {
+        List<Event> foundEvents = eventRepository.findByNameContainingIgnoreCase(query);
+        if (foundEvents.isEmpty()){
+            throw new DataNotFoundException("Event not found !");
+        }
+        return foundEvents.stream().map(SearchEventResponseDTO::new).toList();
+    }
+
+    @Override
+    public GetEventResponseDTO getEventById(Long eventId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(()-> new EventNotFoundException(eventId));
+        return new GetEventResponseDTO(event);
     }
 
     @Override
