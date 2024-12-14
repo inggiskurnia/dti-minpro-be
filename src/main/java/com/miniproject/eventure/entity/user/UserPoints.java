@@ -1,6 +1,5 @@
 package com.miniproject.eventure.entity.user;
 
-import com.miniproject.eventure.entity.transaction.Transaction;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -26,12 +25,12 @@ public class UserPoints {
     private User user;
 
     @NotNull
-    @Column(name = "total_amount")
-    private Double totalAmount;
+    @Column(name = "points", nullable = false)
+    private Double points;
 
-    @ManyToOne
-    @JoinColumn(name = "transaction_id", nullable = false)
-    private Transaction transaction;
+    @NotNull
+    @Column(name = "used_points", nullable = false)
+    private Double usedPoints;
 
     @Column(name = "expired_at")
     private OffsetDateTime expiredAt;

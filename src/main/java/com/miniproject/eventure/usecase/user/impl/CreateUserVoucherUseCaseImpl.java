@@ -4,7 +4,6 @@ import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.common.exeptions.UserNotFoundException;
 import com.miniproject.eventure.common.exeptions.VoucherNotFoundException;
 import com.miniproject.eventure.common.utils.ExpiryDate;
-import com.miniproject.eventure.common.utils.VoucherService;
 import com.miniproject.eventure.entity.user.User;
 import com.miniproject.eventure.entity.user.UserVoucher;
 import com.miniproject.eventure.entity.voucher.Voucher;
