@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface EventFeedbackRepository extends JpaRepository<EventFeedback, Long> {
-    Optional<EventFeedback> findByEventEventIdAndUserUserId(Long eventId, Long userId);
-    Page<EventFeedback> findByEventEventId(Long eventId, Pageable pageable);
+    Optional<EventFeedback> findByEventTicketEventTicketIdAndUserUserId(Long eventTicketId, Long userId);
+    Page<EventFeedback> findByEventTicketEventTicketId(Long eventTicket, Pageable pageable);
 }

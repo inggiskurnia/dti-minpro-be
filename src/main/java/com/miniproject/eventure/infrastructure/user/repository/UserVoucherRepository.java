@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface UserVoucherRepository extends JpaRepository<UserVoucher, Long> {
     Optional<UserVoucher> findByUserUserIdAndVoucherVoucherId(Long userId, Long voucherId);
-    Optional<List<UserVoucher>> findByUserUserId(Long userID);
+    List<UserVoucher> findByUserUserId(Long userID);
 }

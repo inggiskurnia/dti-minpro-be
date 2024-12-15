@@ -31,10 +31,10 @@ public class GetEventReviewUseCaseImpl implements GetEventReviewUseCase {
     }
 
     @Override
-    public PaginationInfo<GetPaginatedEventReviewResponseDTO> getPaginatedEventReview(Long eventId, PageRequest pageRequest) {
-        Page<EventReview> eventReviews = eventReviewRepository.findByEventEventId(eventId, pageRequest);
+    public PaginationInfo<GetPaginatedEventReviewResponseDTO> getPaginatedEventReview(Long evenTicketId, PageRequest pageRequest) {
+        Page<EventReview> eventReviews = eventReviewRepository.findByEventTicketEventTicketId(evenTicketId, pageRequest);
         if (eventReviews.isEmpty()){
-            throw new DataNotFoundException("Event review with event ID " + eventId + " not found !");
+            throw new DataNotFoundException("Event review with event ID " + evenTicketId + " not found !");
         }
 
         List<GetPaginatedEventReviewResponseDTO> eventReviewsDTO = eventReviews.stream().map(GetPaginatedEventReviewResponseDTO::new).toList();

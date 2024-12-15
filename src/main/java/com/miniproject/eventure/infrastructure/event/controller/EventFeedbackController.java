@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/event/{eventId}/feedback")
+@RequestMapping("api/v1/event/ticket/{eventTicketId}/feedback")
 public class EventFeedbackController {
 
     @Autowired
@@ -22,19 +22,19 @@ public class EventFeedbackController {
 
     @GetMapping
     public ResponseEntity<?> getPaginatedEventFeedbackByEventId(
-            @PathVariable Long eventId,
+            @PathVariable Long eventTicketId,
             @RequestParam(required = false, defaultValue = "5") int limit,
             @RequestParam(required = false, defaultValue = "0") int page) {
         PageRequest pageRequest = PageRequest.of(page, limit);
-        return ApiResponse.success(HttpStatus.OK.value(), "Get paginated event feedback success", getEventFeedbackUseCase.getPaginatedEvent(eventId, pageRequest));
+        return ApiResponse.success(HttpStatus.OK.value(), "Get paginated event feedback success", getEventFeedbackUseCase.getPaginatedEvent(eventTicketId, pageRequest));
     }
 
     @PostMapping("/user/{userId}")
     public ResponseEntity<?> createEventFeedback(
-            @PathVariable Long eventId,
+            @PathVariable Long eventTicketId,
             @PathVariable Long userId,
             @RequestBody CreateEventFeedbackRequestDTO req) {
-        return ApiResponse.success((HttpStatus.OK.value()), "Create event feedback success", createEventFeedbackUseCase.createEventFeedback(eventId, userId, req));
+        return ApiResponse.success((HttpStatus.OK.value()), "Create event feedback success", createEventFeedbackUseCase.createEventFeedback(eventTicketId, userId, req));
     }
 }
 

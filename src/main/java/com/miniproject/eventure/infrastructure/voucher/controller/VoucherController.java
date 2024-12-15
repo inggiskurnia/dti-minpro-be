@@ -19,6 +19,10 @@ public class VoucherController {
     @Autowired
     GetVoucherUseCase getVoucherUseCase;
 
+    @GetMapping("/{voucherId}")
+    public ResponseEntity<?> getVoucherByVoucherId(@PathVariable Long voucherId) {
+        return ApiResponse.success(HttpStatus.OK.value(), "Get event voucher success", getVoucherUseCase.getVoucherById(voucherId));
+    }
 
     @GetMapping("/event/{eventId}")
     public ResponseEntity<?> getVoucherByEvent(@PathVariable Long eventId) {

@@ -31,8 +31,8 @@ public class GetEventFeedbackUseCaseImpl implements GetEventFeedbackUseCase {
     }
 
     @Override
-    public PaginationInfo<GetPaginatedEventFeedbackResponseDTO> getPaginatedEvent(Long eventId, PageRequest pageRequest) {
-        Page<EventFeedback> eventFeedbacksPage = eventFeedbackRepository.findByEventEventId(eventId,pageRequest);
+    public PaginationInfo<GetPaginatedEventFeedbackResponseDTO> getPaginatedEvent(Long eventTicketId, PageRequest pageRequest) {
+        Page<EventFeedback> eventFeedbacksPage = eventFeedbackRepository.findByEventTicketEventTicketId(eventTicketId,pageRequest);
         if (eventFeedbacksPage.isEmpty()){
             throw new EventFeedbackNotFoundException();
         }

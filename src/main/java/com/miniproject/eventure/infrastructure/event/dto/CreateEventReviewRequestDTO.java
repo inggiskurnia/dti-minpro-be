@@ -9,9 +9,6 @@ import lombok.Data;
 public class CreateEventReviewRequestDTO {
 
     @NotNull
-    private Long userId;
-
-    @NotNull
     @Min(1)
     @Max(5)
     private Integer rating;

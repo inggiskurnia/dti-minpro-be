@@ -1,8 +1,10 @@
 package com.miniproject.eventure.usecase.transaction;
 
 import com.miniproject.eventure.infrastructure.transaction.dto.CreateTransactionRequestDTO;
-import com.miniproject.eventure.infrastructure.transaction.dto.GetTransactionResponseDTO;
+import com.miniproject.eventure.infrastructure.transaction.dto.CreateTransactionResponseDTO;
+import jakarta.transaction.Transactional;
 
 public interface CreateTransactionUseCase {
-    GetTransactionResponseDTO createTransaction(CreateTransactionRequestDTO req);
+    @Transactional
+    CreateTransactionResponseDTO createTransaction(CreateTransactionRequestDTO req);
 }
