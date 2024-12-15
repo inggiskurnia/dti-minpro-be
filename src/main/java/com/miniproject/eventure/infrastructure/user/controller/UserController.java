@@ -1,10 +1,7 @@
 package com.miniproject.eventure.infrastructure.user.controller;
 
 import com.miniproject.eventure.common.responses.ApiResponse;
-import com.miniproject.eventure.infrastructure.user.dto.CreateUserPointsRequestDTO;
-import com.miniproject.eventure.infrastructure.user.dto.CreateUserRequestDTO;
-import com.miniproject.eventure.infrastructure.user.dto.CreateUserVoucherRequestDTO;
-import com.miniproject.eventure.infrastructure.user.dto.UpdateUserRequestDTO;
+import com.miniproject.eventure.infrastructure.user.dto.*;
 import com.miniproject.eventure.usecase.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +33,9 @@ public class UserController {
     @Autowired
     GetUserPointsUseCase getUserPointsUseCase;
 
+    @Autowired
+    RedeemPointsUseCase redeemPointsUseCase;
+
     @GetMapping
     public ResponseEntity<?> getUser() {
         return ApiResponse.success(HttpStatus.OK.value(), "Get all user success", getUserUseCase.getAllUser());
@@ -46,7 +46,7 @@ public class UserController {
         return ApiResponse.success(HttpStatus.OK.value(), "User found !", getUserUseCase.getUserById(id));
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequestDTO req) {
         return ApiResponse.success(HttpStatus.OK.value(), "Create user success", createUserUseCase.createUser(req));
     }
@@ -79,6 +79,11 @@ public class UserController {
     @GetMapping("/{userId}/points/total")
     public ResponseEntity<?> getTotalPointsAvailable(@PathVariable Long userId){
         return ApiResponse.success(HttpStatus.OK.value(), "Get total available points success", getUserPointsUseCase.getTotalUserPoint(userId));
+    }
+
+    @PostMapping("/redeem")
+    public void redeemPoints(@RequestBody RedeemPointsRequestDTO redeemPointsRequestDTO) {
+        redeemPointsUseCase.redeemPoints(redeemPointsRequestDTO);
     }
 
 }

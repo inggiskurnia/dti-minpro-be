@@ -38,8 +38,13 @@ public class CreateVoucherUseCaseImpl implements CreateVoucherUseCase {
             throw new DuplicateRequestDataException("Voucher with the name " + req.getName() + " already exist");
         }
 
-        Event event = eventRepository.findById(req.getEventId())
-                .orElseThrow(()-> new EventNotFoundException(req.getEventId()));
+        // If the voucher name is "Referral Voucher", eventId can be null
+        Event event = null;
+        if (!"Referral Voucher".equals(req.getName())) {
+            // For other voucher names, eventId must be provided
+            event = eventRepository.findById(req.getEventId())
+                    .orElseThrow(() -> new EventNotFoundException(req.getEventId()));
+        }
 
         VoucherType voucherType = voucherTypeRepository.findById(req.getVoucherTypeId())
                 .orElseThrow(()-> new VoucherTypeNotFoundException(req.getVoucherTypeId()));

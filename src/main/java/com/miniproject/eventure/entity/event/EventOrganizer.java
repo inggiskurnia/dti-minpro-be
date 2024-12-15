@@ -30,8 +30,7 @@ public class EventOrganizer {
     @Column(nullable = false)
     private String name;
 
-    @NotNull
-    @Column(nullable = false)
+    @Column
     private String email;
 
     @ManyToOne
