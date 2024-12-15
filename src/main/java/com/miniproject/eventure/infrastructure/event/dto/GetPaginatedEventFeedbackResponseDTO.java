@@ -9,6 +9,7 @@ import java.time.OffsetDateTime;
 public class GetPaginatedEventFeedbackResponseDTO {
     private Long eventFeedbackId;
     private String eventName;
+    private String eventTicketName;
     private String userFullName;
     private String userProfilePicture;
     private String feedback;
@@ -16,7 +17,8 @@ public class GetPaginatedEventFeedbackResponseDTO {
 
     public GetPaginatedEventFeedbackResponseDTO(EventFeedback eventFeedback){
         this.eventFeedbackId = eventFeedback.getEventFeedbackId();
-        this.eventName = eventFeedback.getEvent().getName();
+        this.eventName = eventFeedback.getEventTicket().getEvent().getName();
+        this.eventTicketName = eventFeedback.getEventTicket().getTicketName();
         this.userFullName = eventFeedback.getUser().getFullName();
         this.userProfilePicture = eventFeedback.getUser().getProfilePicture();
         this.feedback = eventFeedback.getFeedback();

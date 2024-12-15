@@ -1,24 +1,23 @@
 package com.miniproject.eventure.entity.user;
 
+import com.miniproject.eventure.entity.event.EventTicket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "user_points")
-public class UserPoints {
-
+@Table(name = "user_tickets")
+public class UserTicket {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_points_id_gen")
-    @SequenceGenerator(name = "user_points_id_gen", sequenceName = "user_points_user_point_id_seq", allocationSize = 1)
-    @Column(name = "user_point_id")
-    private Long userPointId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_tickets_id_gen")
+    @SequenceGenerator(name = "user_tickets_id_gen", sequenceName = "user_tickets_user_ticket_id_seq", allocationSize = 1)
+    @Column(name = "user_ticket_id")
+    private Long userTicketId;
 
     @NotNull
     @ManyToOne
@@ -26,14 +25,13 @@ public class UserPoints {
     private User user;
 
     @NotNull
-    @Column(name = "points", nullable = false)
-    private BigDecimal points;
+    @ManyToOne
+    @JoinColumn(name = "event_ticket_id", nullable = false)
+    private EventTicket eventTicket;
 
-    @Column(name = "used_points", nullable = false)
-    private BigDecimal usedPoints;
-
-    @Column(name = "expired_at")
-    private OffsetDateTime expiredAt;
+    @NotNull
+    @Column(name = "total_ticket", nullable = false)
+    private Integer totalTicket;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;
@@ -59,4 +57,5 @@ public class UserPoints {
     protected void onRemove() {
         deletedAt = OffsetDateTime.now();
     }
+
 }

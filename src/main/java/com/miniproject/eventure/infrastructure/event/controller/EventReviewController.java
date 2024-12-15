@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/event/{eventId}/review")
+@RequestMapping("api/v1/event/ticket/{eventTicketId}/review")
 public class EventReviewController {
 
     @Autowired
@@ -22,18 +22,19 @@ public class EventReviewController {
 
     @GetMapping
     public ResponseEntity<?> getPaginatedEventReview(
-            @PathVariable Long eventId,
+            @PathVariable Long eventTicketId,
             @RequestParam(required = false, defaultValue = "10") int limit,
             @RequestParam(required = false, defaultValue = "0") int page) {
         PageRequest pageRequest = PageRequest.of(page, limit);
-        return ApiResponse.success(HttpStatus.OK.value(), "Get paginated event review success", getEventReviewUseCase.getPaginatedEventReview(eventId, pageRequest));
+        return ApiResponse.success(HttpStatus.OK.value(), "Get paginated event review success", getEventReviewUseCase.getPaginatedEventReview(eventTicketId, pageRequest));
     }
 
-    @PostMapping
+    @PostMapping("/user/{userId}")
     public ResponseEntity<?> createEventReview(
-            @PathVariable Long eventId,
+            @PathVariable Long eventTicketId,
+            @PathVariable Long userId,
             @RequestBody CreateEventReviewRequestDTO req) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Create event review success", createEventReviewUseCase.createEventReview(eventId, req));
+        return ApiResponse.success(HttpStatus.OK.value(), "Create event review success", createEventReviewUseCase.createEventReview(eventTicketId, userId, req));
     }
 }
 

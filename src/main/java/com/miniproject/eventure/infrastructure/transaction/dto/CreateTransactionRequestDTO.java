@@ -23,6 +23,10 @@ public class CreateTransactionRequestDTO {
     @NotNull
     private BigDecimal originalAmount;
 
+    private Long userVoucherId;
+
+    private Long voucherId;
+
     private BigDecimal voucherDeduction;
 
     private BigDecimal pointsDeduction;

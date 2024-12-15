@@ -20,8 +20,8 @@ public class EventFeedback {
     private Long eventFeedbackId;
 
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false, foreignKey = @ForeignKey(name = "event_feedbacks_event_id_fkey"))
-    private Event event;
+    @JoinColumn(name = "event_ticket_id", nullable = false, foreignKey = @ForeignKey(name = "event_feedbacks_event_ticket_id_fkey"))
+    private EventTicket eventTicket;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "event_feedbacks_user_id_fkey"))

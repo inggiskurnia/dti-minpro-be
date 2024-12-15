@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface GetVoucherUseCase {
     List<GetVoucherResponseDTO> getEventVoucher(Long eventId);
+    GetVoucherResponseDTO getVoucherById(Long voucherId);
 }

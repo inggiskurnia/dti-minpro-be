@@ -25,8 +25,8 @@ public class EventReview {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false, foreignKey = @ForeignKey(name = "FK_event"))
-    private Event event;
+    @JoinColumn(name = "event_ticket_id", nullable = false, foreignKey = @ForeignKey(name = "FK_event_ticket_id"))
+    private EventTicket eventTicket;
 
     @NotNull
     @ManyToOne

@@ -1,8 +1,11 @@
 package com.miniproject.eventure.infrastructure.user.controller;
 
 import com.miniproject.eventure.common.responses.ApiResponse;
-import com.miniproject.eventure.infrastructure.user.dto.*;
-import com.miniproject.eventure.usecase.user.*;
+import com.miniproject.eventure.infrastructure.user.dto.CreateUserRequestDTO;
+import com.miniproject.eventure.infrastructure.user.dto.UpdateUserRequestDTO;
+import com.miniproject.eventure.usecase.user.CreateUserUseCase;
+import com.miniproject.eventure.usecase.user.GetUserUseCase;
+import com.miniproject.eventure.usecase.user.UpdateUserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,21 +24,6 @@ public class UserController {
     @Autowired
     UpdateUserUseCase updateUserUseCase;
 
-    @Autowired
-    CreateUserVoucherUseCase createUserVoucherUseCase;
-
-    @Autowired
-    CreateUserPointsUseCase createUserPointsUseCase;
-
-    @Autowired
-    GetUserVoucherUseCase getUserVoucherUseCase;
-
-    @Autowired
-    GetUserPointsUseCase getUserPointsUseCase;
-
-    @Autowired
-    RedeemPointsUseCase redeemPointsUseCase;
-
     @GetMapping
     public ResponseEntity<?> getUser() {
         return ApiResponse.success(HttpStatus.OK.value(), "Get all user success", getUserUseCase.getAllUser());
@@ -43,47 +31,16 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable final Long id) {
-        return ApiResponse.success(HttpStatus.OK.value(), "User found !", getUserUseCase.getUserById(id));
+        return ApiResponse.success(HttpStatus.OK.value(), "User found!", getUserUseCase.getUserById(id));
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequestDTO req) {
         return ApiResponse.success(HttpStatus.OK.value(), "Create user success", createUserUseCase.createUser(req));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUserById(@PathVariable Long id, @RequestBody UpdateUserRequestDTO req) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Update user success !", updateUserUseCase.updateUser(id, req));
+        return ApiResponse.success(HttpStatus.OK.value(), "Update user success!", updateUserUseCase.updateUser(id, req));
     }
-
-    @GetMapping("/referral/{code}")
-    public ResponseEntity<?> getReferralCode(@PathVariable("code") String referralCode) {
-        return ApiResponse.success(HttpStatus.OK.value(), "User with referral code found!", getUserUseCase.getReferralCode(referralCode));
-    }
-
-    @PostMapping("/voucher")
-    public ResponseEntity<?> createUsesVoucher(@RequestBody CreateUserVoucherRequestDTO req){
-        return ApiResponse.success(HttpStatus.OK.value(), "Create user voucher success", createUserVoucherUseCase.createUserVoucher(req));
-    }
-
-    @GetMapping("/{userId}/voucher")
-    public ResponseEntity<?> getUserVoucher(@PathVariable Long userId){
-        return ApiResponse.success(HttpStatus.OK.value(), "Get user voucher success", getUserVoucherUseCase.getUserVoucher(userId));
-    }
-
-    @PostMapping("/{userId}/points")
-    public ResponseEntity<?> createUserPoints(@PathVariable Long userId, @RequestBody CreateUserPointsRequestDTO req){
-        return ApiResponse.success(HttpStatus.OK.value(), "Create user points success", createUserPointsUseCase.createUserPoints(userId,req));
-    }
-
-    @GetMapping("/{userId}/points/total")
-    public ResponseEntity<?> getTotalPointsAvailable(@PathVariable Long userId){
-        return ApiResponse.success(HttpStatus.OK.value(), "Get total available points success", getUserPointsUseCase.getTotalUserPoint(userId));
-    }
-
-    @PostMapping("/redeem")
-    public void redeemPoints(@RequestBody RedeemPointsRequestDTO redeemPointsRequestDTO) {
-        redeemPointsUseCase.redeemPoints(redeemPointsRequestDTO);
-    }
-
 }

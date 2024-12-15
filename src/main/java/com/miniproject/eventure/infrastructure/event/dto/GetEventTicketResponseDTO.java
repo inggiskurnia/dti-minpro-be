@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetEventTicketResponseDTO {
+    private Long userEventTicketId;
     private Long ticketId;
     private String ticketName;
     private Double price;

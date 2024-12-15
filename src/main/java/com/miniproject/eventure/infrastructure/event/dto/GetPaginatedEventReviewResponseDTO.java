@@ -14,7 +14,7 @@ public class GetPaginatedEventReviewResponseDTO {
 
     public GetPaginatedEventReviewResponseDTO(EventReview eventReview){
         this.eventReviewId = eventReview.getEventReviewId();
-        this.eventName = eventReview.getEvent().getName();
+        this.eventName = eventReview.getEventTicket().getEvent().getName();
         this.userFullname = eventReview.getUser().getFullName();
         this.userProfilePicture = eventReview.getUser().getProfilePicture();
         this.rating = eventReview.getRating();

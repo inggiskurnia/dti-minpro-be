@@ -23,7 +23,7 @@ public class CreateUserPointsRequestDTO {
 
         userPoints.setUser(user);
         userPoints.setPoints(this.points);
-        userPoints.setUsedPoints(BigDecimal.valueOf(0.0));
+        userPoints.setUsedPoints(BigDecimal.valueOf(0));
         userPoints.setExpiredAt(expiryAt);
 
         return userPoints;
