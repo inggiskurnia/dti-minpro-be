@@ -68,6 +68,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/demo").permitAll()
 
                         // Only for checking
+                        .requestMatchers("/api/v1/event-organizer").permitAll()
                         .requestMatchers("/api/v1/user/{id}").permitAll()
                         .requestMatchers("/api/v1/voucher").permitAll()
                         .requestMatchers("/api/v1/event").permitAll()
