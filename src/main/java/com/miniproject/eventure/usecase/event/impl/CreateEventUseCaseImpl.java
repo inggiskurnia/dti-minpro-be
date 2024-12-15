@@ -1,18 +1,17 @@
 package com.miniproject.eventure.usecase.event.impl;
 
 import com.miniproject.eventure.common.exeptions.CityNotFoundException;
-import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.EventCategoryNotFoundException;
 import com.miniproject.eventure.common.exeptions.UserNotFoundException;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventCategory;
+import com.miniproject.eventure.entity.event.EventOrganizer;
 import com.miniproject.eventure.entity.geography.City;
-import com.miniproject.eventure.entity.user.User;
 import com.miniproject.eventure.infrastructure.event.dto.CreateEventRequestDTO;
 import com.miniproject.eventure.infrastructure.event.repository.EventCategoryRepository;
+import com.miniproject.eventure.infrastructure.event.repository.EventOrganizerRepository;
 import com.miniproject.eventure.infrastructure.event.repository.EventRepository;
 import com.miniproject.eventure.infrastructure.geography.repository.CityRepository;
-import com.miniproject.eventure.infrastructure.user.repository.UserRepository;
 import com.miniproject.eventure.usecase.event.CreateEventUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class CreateEventUseCaseImpl implements CreateEventUseCase {
 
     @Autowired
-    UserRepository userRepository;
+    EventOrganizerRepository eventOrganizerRepository;
 
     @Autowired
     EventCategoryRepository eventCategoryRepository;
@@ -36,9 +35,9 @@ public class CreateEventUseCaseImpl implements CreateEventUseCase {
     public Event createEvent(CreateEventRequestDTO req) {
         Event newEvent = req.toEntity();
 
-        User user = userRepository.findById(req.getOrganizerId())
+        EventOrganizer eventOrganizer = eventOrganizerRepository.findById(req.getOrganizerId())
                 .orElseThrow(() -> new UserNotFoundException(req.getOrganizerId()));
-        newEvent.setOrganizer(user);
+        newEvent.setOrganizer(eventOrganizer);
 
         EventCategory eventCategory = eventCategoryRepository.findById(req.getEventCategoryId())
                 .orElseThrow(() -> new EventCategoryNotFoundException(req.getEventCategoryId()));
@@ -46,7 +45,7 @@ public class CreateEventUseCaseImpl implements CreateEventUseCase {
 
         City city = cityRepository.findById(req.getCityId())
                 .orElseThrow(() -> new CityNotFoundException(req.getCityId()));
-        newEvent.setCityId(city);
+        newEvent.setCity(city);
 
         return eventRepository.save(newEvent);
     }

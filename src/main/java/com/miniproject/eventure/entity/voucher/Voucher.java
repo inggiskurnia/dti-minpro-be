@@ -26,8 +26,7 @@ public class Voucher {
     @Column(name = "voucher_id")
     private Long voucherId;
 
-    @NotNull
-    @Column(name = "code", nullable = false, unique = true)
+    @Column(name = "code", unique = true)
     private String code;
 
     @NotNull
@@ -42,23 +41,22 @@ public class Voucher {
     @Column(name = "description")
     private String description;
 
-    @NotNull
     @Min(0)
-    @Column(name = "total_capacity", nullable = false)
+    @Column(name = "total_capacity")
     private Integer totalCapacity;
 
-    @NotNull
     @Min(0)
-    @Column(name = "total_available", nullable = false)
+    @Column(name = "total_available")
     private Integer totalAvailable;
 
     @Column(name = "validity_period")
     private String validityPeriod;
 
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false)
+    @JoinColumn(name = "event_id", nullable = true)
     private Event event;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "voucher_type_id", nullable = false)
     private VoucherType voucherType;

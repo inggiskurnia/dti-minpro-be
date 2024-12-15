@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface GetUserUseCase {
     List<User> getAllUser();
     Optional<User> getUserById(Long id);
+    Optional<User> getReferralCode(String referralCode);
 }

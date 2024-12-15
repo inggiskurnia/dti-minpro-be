@@ -21,17 +21,14 @@ public class CreateVoucherRequestDTO {
 
     private String description;
 
-    @NotNull
     @Min(0)
     private Integer totalCapacity;
 
-    @NotNull
     @Min(0)
     private Integer totalAvailable;
 
     private String validityPeriod;
 
-    @NotNull
     private Long eventId;
 
     @NotNull

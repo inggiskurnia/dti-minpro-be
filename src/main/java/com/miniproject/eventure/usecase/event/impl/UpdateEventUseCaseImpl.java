@@ -3,13 +3,13 @@ package com.miniproject.eventure.usecase.event.impl;
 import com.miniproject.eventure.common.exeptions.*;
 import com.miniproject.eventure.entity.event.Event;
 import com.miniproject.eventure.entity.event.EventCategory;
+import com.miniproject.eventure.entity.event.EventOrganizer;
 import com.miniproject.eventure.entity.geography.City;
-import com.miniproject.eventure.entity.user.User;
 import com.miniproject.eventure.infrastructure.event.dto.UpdateEventRequestDTO;
 import com.miniproject.eventure.infrastructure.event.repository.EventCategoryRepository;
+import com.miniproject.eventure.infrastructure.event.repository.EventOrganizerRepository;
 import com.miniproject.eventure.infrastructure.event.repository.EventRepository;
 import com.miniproject.eventure.infrastructure.geography.repository.CityRepository;
-import com.miniproject.eventure.infrastructure.user.repository.UserRepository;
 import com.miniproject.eventure.usecase.event.UpdateEventUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.time.OffsetDateTime;
 public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
 
     @Autowired
-    UserRepository userRepository;
+    EventOrganizerRepository eventOrganizerRepository;
 
     @Autowired
     EventCategoryRepository eventCategoryRepository;
@@ -38,7 +38,7 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
                 .orElseThrow(()-> new EventNotFoundException(id));
 
         if(req.getOrganizerId() != null){
-            User organizer = userRepository.findById(req.getOrganizerId())
+            EventOrganizer organizer = eventOrganizerRepository.findById(req.getOrganizerId())
                     .orElseThrow(()-> new EventOrganizerNotFoundException(req.getOrganizerId()));
             event.setOrganizer(organizer);
         }
@@ -59,7 +59,7 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
         if (req.getCityId() != null){
             City city = cityRepository.findById(req.getCityId())
                     .orElseThrow(()-> new CityNotFoundException(req.getCityId()));
-            event.setCityId(city);
+            event.setCity(city);
         }
         if (req.getLocationDetail() != null){
             event.setLocationDetail(req.getLocationDetail());

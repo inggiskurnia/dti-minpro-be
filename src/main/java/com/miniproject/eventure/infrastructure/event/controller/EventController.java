@@ -14,63 +14,36 @@ import org.springframework.web.bind.annotation.*;
 public class EventController {
 
     @Autowired
-    private CreateEventUseCase createEventUseCase;
+    CreateEventUseCase createEventUseCase;
 
     @Autowired
-    private GetEventUseCase getEventUseCase;
+    GetEventUseCase getEventUseCase;
 
     @Autowired
-    private UpdateEventUseCase updateEventUseCase;
-
-    @Autowired
-    private CreateEventReviewUseCase createEventReviewUseCase;
-
-    @Autowired
-    private GetEventReviewUseCase getEventReviewUseCase;
-
-    @Autowired
-    private CreateEventFeedbackUseCase createEventFeedbackUseCase;
-
-    @Autowired
-    private GetEventFeedbackUseCase getEventFeedbackUseCase;
-
-    @Autowired
-    private CreateEventPictureUseCase createEventPictureUseCase;
-
-    @Autowired
-    private GetEventPictureUseCase getEventPictureUseCase;
-
-    @Autowired
-    private CreateEventOrganizerUseCase createEventOrganizerUseCase;
-
-    @Autowired
-    private GetEventOrganizerUseCase getEventOrganizerUseCase;
-
-    @Autowired
-    private CreateEventTicketUseCase createEventTicketUseCase;
-
-    @Autowired
-    private GetEventTicketUseCase getEventTicketUseCase;
-
-    @Autowired
-    private UpdateEventTicketUseCase updateEventTicketUseCase;
+    UpdateEventUseCase updateEventUseCase;
 
     @GetMapping
     public ResponseEntity<?> getEvent(
             @RequestParam(required = false, defaultValue = "10") int limit,
-            @RequestParam(required = false, defaultValue = "0") int page) {
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false) Long eventCategoryId,
+            @RequestParam(required = false) Long cityId) {
         PageRequest pageRequest = PageRequest.of(page, limit);
-        return ApiResponse.success(HttpStatus.OK.value(), "Get event page success", getEventUseCase.getPaginatedEvent(pageRequest));
+        return ApiResponse.success(HttpStatus.OK.value(), "Get event page success", getEventUseCase.getPaginatedEvent(pageRequest, eventCategoryId, cityId));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllEvent() {
-        return ApiResponse.success(HttpStatus.OK.value(), "Get all event success", getEventUseCase.getAllEvent());
+    @GetMapping("/search-by-name")
+    public ResponseEntity<?> searchEventByName(@RequestParam String query){
+        return ApiResponse.success(HttpStatus.OK.value(), "Get event success", getEventUseCase.searchEventByName(query));
     }
 
     @GetMapping("/{eventId}")
     public ResponseEntity<?> getEventById(@PathVariable Long eventId) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Get event success", getEventUseCase.getEventById(eventId));
+        if (eventId != null){
+            return ApiResponse.success(HttpStatus.OK.value(), "Get event success", getEventUseCase.getEventById(eventId));
+        } else {
+            return ApiResponse.success(HttpStatus.OK.value(), "Get all event success", getEventUseCase.getAllEvent());
+        }
     }
 
     @PostMapping
@@ -84,79 +57,5 @@ public class EventController {
             @RequestBody UpdateEventRequestDTO req) {
         return ApiResponse.success(HttpStatus.OK.value(), "Update event success", updateEventUseCase.updateEvent(eventId, req));
     }
-
-    @GetMapping("/{eventId}/review")
-    public ResponseEntity<?> getPaginatedEventReview(
-            @PathVariable Long eventId,
-            @RequestParam(required = false, defaultValue = "10") int limit,
-            @RequestParam(required = false, defaultValue = "0") int page) {
-        PageRequest pageRequest = PageRequest.of(page, limit);
-        return ApiResponse.success(HttpStatus.OK.value(), "Get paginated event review success", getEventReviewUseCase.getPaginatedEventReview(eventId, pageRequest));
-    }
-
-    @PostMapping("/{eventId}/review")
-    public ResponseEntity<?> createEventReview(
-            @PathVariable Long eventId,
-            @RequestBody CreateEventReviewRequestDTO req) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Create event review success", createEventReviewUseCase.createEventReview(eventId, req));
-    }
-
-    @GetMapping("/{eventId}/feedback")
-    public ResponseEntity<?> getPaginatedEventFeedbackByEventId(
-            @PathVariable Long eventId,
-            @RequestParam(required = false, defaultValue = "5") int limit,
-            @RequestParam(required = false, defaultValue = "0") int page) {
-        PageRequest pageRequest = PageRequest.of(page, limit);
-        return ApiResponse.success(HttpStatus.OK.value(), "Get paginated event feedback success", getEventFeedbackUseCase.getPaginatedEvent(eventId, pageRequest));
-    }
-
-    @PostMapping("/{eventId}/feedback/user/{userId}")
-    public ResponseEntity<?> createEventFeedback(
-            @PathVariable Long eventId,
-            @PathVariable Long userId,
-            @RequestBody CreateEventFeedbackRequestDTO req) {
-        return ApiResponse.success((HttpStatus.OK.value()), "Create event feedback success", createEventFeedbackUseCase.createEventFeedback(eventId, userId, req));
-    }
-
-    @PostMapping("/{eventId}/picture")
-    public ResponseEntity<?> createEventPicture(
-            @PathVariable Long eventId,
-            @RequestBody BulkCreateEventPictureRequestDTO req) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Create event pictures success", createEventPictureUseCase.bulkCreateEventPicture(eventId, req));
-    }
-
-    @GetMapping("{eventId}/picture")
-    public ResponseEntity<?> getAllEventPicture(@PathVariable Long eventId) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Get all event pictures success", getEventPictureUseCase.getAllEventPicture(eventId));
-    }
-
-    @PostMapping("/organizer")
-    public ResponseEntity<?> createEventOrganizer(@RequestBody CreateEventOrganizerRequestDTO req) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Create event organizer success", createEventOrganizerUseCase.createEventOrganizer(req));
-    }
-
-    @GetMapping("/organizer/{eventOrganizerId}")
-    public ResponseEntity<?> getEventOrganizerById(@PathVariable Long eventOrganizerId) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Get event organizer by ID success", getEventOrganizerUseCase.getEventOrganizerById(eventOrganizerId));
-    }
-
-    @PostMapping("/{eventId}/ticket")
-    public ResponseEntity<?> createEventTicket(
-            @PathVariable Long eventId,
-            @RequestBody CreateEventTicketRequestDTO req) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Create new ticket success", createEventTicketUseCase.createEventTicket(eventId, req));
-    }
-
-    @GetMapping("/{eventId}/ticket")
-    public ResponseEntity<?> getEventTicketByEventId(@PathVariable Long eventId) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Get ticket success", getEventTicketUseCase.getEventTicketByEventId(eventId));
-    }
-
-    @PutMapping("/{eventId}/ticket/{ticketId}")
-    public ResponseEntity<?> updateEventTicket(
-            @PathVariable Long eventId,
-            @PathVariable Long ticketId,
-            @RequestBody UpdateEventTicketRequestDTO req) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Update event ticket success !", updateEventTicketUseCase.updateEventTicket(eventId, ticketId, req));
-    }
 }
+

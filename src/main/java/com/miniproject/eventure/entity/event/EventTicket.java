@@ -37,12 +37,12 @@ public class EventTicket {
 
     @NotNull
     @Min(0)
-    @Column(nullable = false)
+    @Column(name = "total_capacity", nullable = false)
     private Integer totalCapacity;
 
     @NotNull
     @Min(0)
-    @Column(nullable = false)
+    @Column(name = "total_available", nullable = false)
     private Integer totalAvailable;
 
     @Column(columnDefinition = "TEXT")

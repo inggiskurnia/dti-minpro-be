@@ -6,10 +6,11 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Setter
 @Getter
@@ -34,11 +35,6 @@ public class User {
     private String email;
 
     @NotNull
-    @DecimalMin("0")
-    @Column(name = "point", nullable = false, precision = 10, scale = 0)
-    private BigDecimal point = BigDecimal.ZERO;
-
-    @NotNull
     @Size(min = 8, max = 255)
     @Column(name = "password", nullable = false, length = 255)
     private String password;
@@ -50,11 +46,14 @@ public class User {
     @Column(name = "birthdate", nullable = false, columnDefinition = "TIMESTAMP")
     private OffsetDateTime birthdate;
 
-//    @Column(name = "is_organizer",nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-//    private Boolean isOrganizer;
-
     @Column(name = "referral_code")
     private String referralCode;
+
+    @Column(name = "referrer_code")
+    private String referrerCode;
+
+    @Column(name = "gender")
+    private String gender;
 
     @Column(name = "profile_picture")
     private String profilePicture;
@@ -91,6 +90,7 @@ public class User {
     public Boolean isOrganizer() {
         return roles.stream().anyMatch(role -> role.getName().equals("ORGANIZER"));
     }
+
 }
 
 

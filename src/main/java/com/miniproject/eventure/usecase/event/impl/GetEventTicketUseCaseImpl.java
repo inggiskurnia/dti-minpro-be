@@ -1,6 +1,5 @@
 package com.miniproject.eventure.usecase.event.impl;
 
-import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.EventTicketNotFoundException;
 import com.miniproject.eventure.entity.event.EventTicket;
 import com.miniproject.eventure.infrastructure.event.dto.GetEventTicketResponseDTO;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GetTicketUseCaseImpl implements GetEventTicketUseCase {
+public class GetEventTicketUseCaseImpl implements GetEventTicketUseCase {
 
     @Autowired
     EventTicketRepository eventTicketRepository;

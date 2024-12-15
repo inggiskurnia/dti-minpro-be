@@ -1,7 +1,6 @@
 package com.miniproject.eventure.entity.event;
 
 import com.miniproject.eventure.entity.geography.City;
-import com.miniproject.eventure.entity.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class Event {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false, foreignKey = @ForeignKey(name = "FK_organizer"))
-    private User organizer;
+    private EventOrganizer organizer;
 
     @NotNull
     @Size(max = 100)
@@ -47,7 +46,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "city_id", foreignKey = @ForeignKey(name = "FK_city"))
-    private City cityId;
+    private City city;
 
     @Column(name = "location_detail", nullable = false, columnDefinition = "TEXT")
     private String locationDetail;
