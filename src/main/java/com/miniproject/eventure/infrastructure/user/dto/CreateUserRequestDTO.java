@@ -36,6 +36,8 @@ public class CreateUserRequestDTO {
     @NotNull
     private OffsetDateTime birthdate;
 
+    private String referrerCode;
+
     public User toEntity(){
         User user = new User();
         user.setFullName(fullName);
@@ -43,6 +45,7 @@ public class CreateUserRequestDTO {
         user.setPassword(password);
         Set<Role> roles = new HashSet<>();
         user.setRoles(roles);
+        user.setReferrerCode(referrerCode);
         user.setBirthdate(birthdate);
         return user;
     }

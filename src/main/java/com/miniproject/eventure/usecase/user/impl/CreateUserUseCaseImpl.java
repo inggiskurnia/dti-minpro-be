@@ -1,37 +1,30 @@
 package com.miniproject.eventure.usecase.user.impl;
 
+import com.miniproject.eventure.common.exeptions.DataNotFoundException;
 import com.miniproject.eventure.common.exeptions.DuplicateRequestDataException;
 import com.miniproject.eventure.common.utils.ReferralCodeGenerator;
-import com.miniproject.eventure.entity.geography.City;
 import com.miniproject.eventure.entity.user.Role;
 import com.miniproject.eventure.entity.user.User;
-import com.miniproject.eventure.infrastructure.geography.repository.CityRepository;
+import com.miniproject.eventure.entity.user.UserPoints;
+import com.miniproject.eventure.entity.user.UserVoucher;
+import com.miniproject.eventure.entity.voucher.Voucher;
 import com.miniproject.eventure.infrastructure.user.dto.CreateUserRequestDTO;
+import com.miniproject.eventure.infrastructure.user.repository.UserPointsRepository;
 import com.miniproject.eventure.infrastructure.user.repository.UserRepository;
 import com.miniproject.eventure.infrastructure.user.repository.RoleRepository;
+import com.miniproject.eventure.infrastructure.user.repository.UserVoucherRepository;
+import com.miniproject.eventure.infrastructure.voucher.repository.VoucherRepository;
 import com.miniproject.eventure.usecase.user.CreateUserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @Service
 public class CreateUserUseCaseImpl implements CreateUserUseCase {
-//    private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
-//    private final RoleRepository roleRepository;
-//    private final ReferralCodeGenerator referralCodeGenerator;
-//    private final CityRepository cityRepository;
-//
-//    public CreateUserUseCaseImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, ReferralCodeGenerator referralCodeGenerator, CityRepository cityRepository) {
-//        this.userRepository = userRepository;
-//        this.passwordEncoder = passwordEncoder;
-//        this.roleRepository = roleRepository;
-//        this.referralCodeGenerator = referralCodeGenerator;
-//        this.cityRepository = cityRepository;
-//    }
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -45,13 +38,19 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     ReferralCodeGenerator referralCodeGenerator;
 
     @Autowired
-    CityRepository cityRepository;
+    VoucherRepository voucherRepository;
+
+    @Autowired
+    UserVoucherRepository userVoucherRepository;
+
+    @Autowired
+    UserPointsRepository userPointsRepository;
 
     @Override
     public User createUser(CreateUserRequestDTO req) {
         Optional<User> foundUser = userRepository.findByEmail(req.getEmail());
-        if(foundUser.isPresent()){
-            throw new DuplicateRequestDataException("Email already exist");
+        if (foundUser.isPresent()) {
+            throw new DuplicateRequestDataException("Email already exists");
         }
 
         // Create user entity
@@ -71,14 +70,39 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         );
         newUser.setReferralCode(referralCode);
 
-//        if (req.getReferralCode() != null && !req.getReferralCode().isEmpty()) {
-//            Optional<User> referrer = userRepository.findByReferralCode(req.getReferralCode());
-//            if (referrer.isEmpty()) {
-//                throw new DataNotFoundException("Referrer with the given referral code not found");
-//            }
-//            newUser.setReferrerCode(req.getReferralCode()); // Store the referral code used
-//        }
+        // Save user entity first to persist the user
+        newUser = userRepository.save(newUser);
 
-        return userRepository.save(newUser);
+        // Using other user referral code
+        if (req.getReferrerCode() != null && !req.getReferrerCode().isEmpty()) {
+            Optional<User> referrer = userRepository.findByReferralCode(req.getReferrerCode());
+            if (referrer.isPresent()) {
+                // Apply referral voucher to the user
+                Voucher referralVoucher = voucherRepository.findByName("Referral Voucher")
+                        .orElseThrow(() -> new DataNotFoundException("Referral voucher not found"));
+
+                UserVoucher userVoucher = new UserVoucher();
+                userVoucher.setUser(newUser);
+                userVoucher.setVoucher(referralVoucher);
+                userVoucher.setExpiredAt(OffsetDateTime.now().plusDays(90));
+
+                userVoucherRepository.save(userVoucher);
+
+                // Add points to the referrer
+                User referrerUser = referrer.get();
+                UserPoints points = new UserPoints();
+                points.setUser(referrerUser);
+                points.setPoints(BigDecimal.valueOf(10000));
+                points.setUsedPoints(BigDecimal.ZERO);
+                points.setExpiredAt(OffsetDateTime.now().plusDays(90));
+                userPointsRepository.save(points);
+            } else {
+                throw new DataNotFoundException("Referrer not found");
+            }
+            newUser.setReferrerCode(req.getReferrerCode()); // Store the referral code used
+        }
+
+        return newUser;
     }
+
 }

@@ -1,6 +1,8 @@
 package com.miniproject.eventure.infrastructure.event.dto;
 
 import com.miniproject.eventure.entity.event.Event;
+import com.miniproject.eventure.entity.event.EventOrganizer;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -10,6 +12,7 @@ import java.time.OffsetDateTime;
 public class GetEventResponseDTO {
 
     private Long eventId;
+    private EventOrganizer organizer;
     private String organizerName;
     private String organizerProfilePicture;
     private String name;
@@ -28,6 +31,7 @@ public class GetEventResponseDTO {
 
     public GetEventResponseDTO(Event event) {
         this.eventId = event.getEventId();
+        this.organizer = event.getOrganizer();
         this.organizerName = event.getOrganizer().getName();
         this.organizerProfilePicture = event.getOrganizer().getProfilePictureLink();
         this.name = event.getName();
