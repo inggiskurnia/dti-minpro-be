@@ -15,8 +15,6 @@ public class GetVoucherResponseDTO {
     private Integer totalCapacity;
     private Integer totalAvailable;
     private String validityPeriod;
-    private Long eventId;
-    private String eventName;
     private Long voucherTypeId;
     private String voucherTypeName;
 
@@ -29,8 +27,6 @@ public class GetVoucherResponseDTO {
         this.totalCapacity = voucher.getTotalCapacity();
         this.totalAvailable = voucher.getTotalAvailable();
         this.validityPeriod = voucher.getValidityPeriod();
-        this.eventId = voucher.getEvent().getEventId();
-        this.eventName = voucher.getEvent().getName();
         this.voucherTypeId = voucher.getVoucherType().getVoucherTypeId();
         this.voucherTypeName = voucher.getVoucherType().getName();
     }

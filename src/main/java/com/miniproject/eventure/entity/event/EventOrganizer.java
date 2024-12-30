@@ -23,15 +23,12 @@ public class EventOrganizer {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "users_id", nullable = false)
     private User user;
 
     @NotNull
     @Column(nullable = false)
     private String name;
-
-    @Column
-    private String email;
 
     @ManyToOne
     @JoinColumn(name = "city_id")
@@ -39,15 +36,6 @@ public class EventOrganizer {
 
     @Column
     private String description;
-
-    @Column
-    private String address;
-
-    @Column(name = "phone_number")
-    private Long phoneNumber;
-
-    @Column
-    private String web;
 
     @Column(name = "profile_picture_link")
     private String profilePictureLink;

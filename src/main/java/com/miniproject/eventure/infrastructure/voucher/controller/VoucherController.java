@@ -19,14 +19,14 @@ public class VoucherController {
     @Autowired
     GetVoucherUseCase getVoucherUseCase;
 
+    @GetMapping
+    public  ResponseEntity<?> getAllVoucher(){
+        return  ApiResponse.success(HttpStatus.OK.value(), "Get all voucher success", getVoucherUseCase.getAllVoucher());
+    }
+
     @GetMapping("/{voucherId}")
     public ResponseEntity<?> getVoucherByVoucherId(@PathVariable Long voucherId) {
         return ApiResponse.success(HttpStatus.OK.value(), "Get event voucher success", getVoucherUseCase.getVoucherById(voucherId));
-    }
-
-    @GetMapping("/event/{eventId}")
-    public ResponseEntity<?> getVoucherByEvent(@PathVariable Long eventId) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Get event voucher success", getVoucherUseCase.getEventVoucher(eventId));
     }
 
     @PostMapping

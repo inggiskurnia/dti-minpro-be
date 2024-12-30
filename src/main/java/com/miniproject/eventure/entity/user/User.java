@@ -52,8 +52,6 @@ public class User {
     @Column(name = "referrer_code")
     private String referrerCode;
 
-    @Column(name = "gender")
-    private String gender;
 
     @Column(name = "profile_picture")
     private String profilePicture;

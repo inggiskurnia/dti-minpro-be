@@ -24,8 +24,8 @@ public class EventController {
 
     @GetMapping
     public ResponseEntity<?> getEvent(
-            @RequestParam(required = false, defaultValue = "10") int limit,
-            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int limit, // how many event
+            @RequestParam(required = false, defaultValue = "0") int page, // which page
             @RequestParam(required = false) Long eventCategoryId,
             @RequestParam(required = false) Long cityId) {
         PageRequest pageRequest = PageRequest.of(page, limit);

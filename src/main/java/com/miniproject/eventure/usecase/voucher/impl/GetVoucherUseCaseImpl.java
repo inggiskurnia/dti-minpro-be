@@ -17,19 +17,13 @@ public class GetVoucherUseCaseImpl implements GetVoucherUseCase {
     VoucherRepository voucherRepository;
 
     @Override
-    public List<GetVoucherResponseDTO> getEventVoucher(Long eventId) {
-        List<Voucher> vouchers = voucherRepository.findByEventEventId(eventId);
-
-        if (vouchers.isEmpty()){
-            throw new DataNotFoundException("Voucher not found");
-        }
-
-        return vouchers.stream().map(GetVoucherResponseDTO::new).toList();
-    }
-
-    @Override
     public GetVoucherResponseDTO getVoucherById(Long voucherId) {
         Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(VoucherNotFoundException::new);
         return new GetVoucherResponseDTO(voucher);
+    }
+
+    @Override
+    public List<GetVoucherResponseDTO> getAllVoucher() {
+        return voucherRepository.findAll().stream().map(GetVoucherResponseDTO::new).toList();
     }
 }

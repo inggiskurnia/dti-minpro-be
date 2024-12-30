@@ -24,6 +24,7 @@ public class UserController {
     @Autowired
     UpdateUserUseCase updateUserUseCase;
 
+
     @GetMapping
     public ResponseEntity<?> getUser() {
         return ApiResponse.success(HttpStatus.OK.value(), "Get all user success", getUserUseCase.getAllUser());
@@ -34,7 +35,7 @@ public class UserController {
         return ApiResponse.success(HttpStatus.OK.value(), "User found!", getUserUseCase.getUserById(id));
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequestDTO req) {
         return ApiResponse.success(HttpStatus.OK.value(), "Create user success", createUserUseCase.createUser(req));
     }

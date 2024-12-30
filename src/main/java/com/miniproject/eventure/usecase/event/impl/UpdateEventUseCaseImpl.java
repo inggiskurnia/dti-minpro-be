@@ -64,12 +64,6 @@ public class UpdateEventUseCaseImpl implements UpdateEventUseCase {
         if (req.getLocationDetail() != null){
             event.setLocationDetail(req.getLocationDetail());
         }
-        if (req.getLongitude() != null){
-            event.setLongitude(req.getLongitude());
-        }
-        if (req.getLatitude() != null){
-            event.setLatitude(req.getLatitude());
-        }
         if (req.getStartedAt() != null){
             event.setStartedAt(req.getStartedAt());
         }

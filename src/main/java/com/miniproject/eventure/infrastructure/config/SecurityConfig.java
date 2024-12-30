@@ -60,24 +60,26 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(new CorsConfigurationSourceImpl()))
                 .authorizeHttpRequests(auth -> auth
                         // Define public routes
-                        .requestMatchers("/error/**").permitAll()
-                        .requestMatchers("/api/v1/auth/login").permitAll()
-                        .requestMatchers("/api/v1/user").permitAll()
-                        .requestMatchers("/api/v1/geo/province").permitAll()
-                        .requestMatchers("/api/v1/geo/city").permitAll()
-                        .requestMatchers("/api/v1/demo").permitAll()
+//                        .requestMatchers("/error/**").permitAll()
+//                        .requestMatchers("/api/v1/auth/login").permitAll()
+//                        .requestMatchers("/api/v1/user").permitAll()
+//                        .requestMatchers("/api/v1/geo/province").permitAll()
+//                        .requestMatchers("/api/v1/geo/city").permitAll()
+//                        .requestMatchers("/api/v1/demo").permitAll()
 
                         // Only for checking
-                        .requestMatchers("/api/v1/event-organizer").permitAll()
-                        .requestMatchers("/api/v1/user/{id}").permitAll()
-                        .requestMatchers("/api/v1/voucher").permitAll()
-                        .requestMatchers("/api/v1/event").permitAll()
-                        .requestMatchers("/api/v1/event/organizer").permitAll()
-                        .requestMatchers("/api/v1/user/referral/{code}").permitAll()
+//                        .requestMatchers("/api/v1/event-organizer").permitAll()
+//                        .requestMatchers("/api/v1/user/{id}").permitAll()
+//                        .requestMatchers("/api/v1/voucher").permitAll()
+//                        .requestMatchers("/api/v1/event").permitAll()
+//                        .requestMatchers("/api/v1/event/organizer").permitAll()
+//                        .requestMatchers("/api/v1/user/referral/{code}").permitAll()
 
 
                         // Define rest of the routes to be private
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll()
+//                        .authenticated()
+                        )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> {
                     oauth2.jwt(jwt -> jwt.decoder(jwtDecoder()));

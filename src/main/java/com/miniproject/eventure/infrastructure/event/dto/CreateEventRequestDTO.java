@@ -29,12 +29,6 @@ public class CreateEventRequestDTO {
     @NotNull(message = "Location details are required")
     private String locationDetail;
 
-    @NotNull(message = "Longitude is required")
-    private Double longitude;
-
-    @NotNull(message = "Latitude is required")
-    private Double latitude;
-
     @NotNull(message = "Start date and time are required")
     private OffsetDateTime startedAt;
 
@@ -56,8 +50,6 @@ public class CreateEventRequestDTO {
         event.setDescription(description);
         event.setThumbnail(thumbnail);
         event.setLocationDetail(locationDetail);
-        event.setLongitude(longitude);
-        event.setLatitude(latitude);
         event.setStartedAt(startedAt);
         event.setEndedAt(endedAt);
         event.setTotalCapacity(totalCapacity);

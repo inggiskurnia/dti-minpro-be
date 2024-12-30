@@ -32,8 +32,7 @@ public class Event {
     private String name;
 
     @NotNull
-    @Size(max = 2000)
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT", length = 2000)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @NotNull
@@ -50,14 +49,6 @@ public class Event {
 
     @Column(name = "location_detail", nullable = false, columnDefinition = "TEXT")
     private String locationDetail;
-
-    @NotNull
-    @Column(name = "longitude", nullable = false)
-    private Double longitude;
-
-    @NotNull
-    @Column(name = "latitude", nullable = false)
-    private Double latitude;
 
     @NotNull
     @Column(name = "started_at", nullable = false)

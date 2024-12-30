@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/user/{userId}/voucher")
+@RequestMapping("api/v1/user/voucher")
 public class UserVoucherController {
 
     @Autowired

@@ -56,6 +56,14 @@ public class GetEventUseCaseImpl implements GetEventUseCase {
                     criteriaBuilder.equal(root.get("city").get("cityId"), cityId));
         }
 
+//        if (searchText != null && !searchText.isEmpty()) {
+//            spec = spec.and((root, query, criteriaBuilder) -> {
+//                String likePattern = "%" + searchText.toLowerCase() + "%";
+//                return criteriaBuilder.or( criteriaBuilder.like(criteriaBuilder.lower(root.get("eventName")), likePattern),
+//                        criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), likePattern) );
+//            });
+//        }
+
         Page<Event> eventsPage = eventRepository.findAll(spec, pageRequest);
         List<GetPaginatedEventResponseDTO> eventsDTO = eventsPage.stream().map(GetPaginatedEventResponseDTO::new).toList();
         return new PaginationInfo<>(eventsPage, eventsDTO);

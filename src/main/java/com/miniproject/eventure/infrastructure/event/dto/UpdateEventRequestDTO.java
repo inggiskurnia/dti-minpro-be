@@ -41,8 +41,6 @@ public class UpdateEventRequestDTO {
         event.setDescription(description);
         event.setThumbnail(thumbnail);
         event.setLocationDetail(thumbnail);
-        event.setLongitude(longitude);
-        event.setLatitude(latitude);
         event.setStartedAt(startedAt);
         event.setEndedAt(endedAt);
         event.setTotalCapacity(totalCapacity);

@@ -29,12 +29,10 @@ public class CreateVoucherRequestDTO {
 
     private String validityPeriod;
 
-    private Long eventId;
-
     @NotNull
     private Long voucherTypeId;
 
-    public Voucher toEntity(String code, Event event, VoucherType voucherType) {
+    public Voucher toEntity(String code, VoucherType voucherType) {
         Voucher voucher = new Voucher();
         voucher.setCode(code);
         voucher.setName(this.name);
@@ -43,7 +41,6 @@ public class CreateVoucherRequestDTO {
         voucher.setTotalCapacity(this.totalCapacity);
         voucher.setTotalAvailable(this.totalAvailable);
         voucher.setValidityPeriod(this.validityPeriod);
-        voucher.setEvent(event);
         voucher.setVoucherType(voucherType);
         return voucher;
     }

@@ -40,8 +40,6 @@ public class GetEventResponseDTO {
         this.eventCategoryName = event.getEventCategory().getName();
         this.cityName = event.getCity().getName();
         this.locationDetail = event.getLocationDetail();
-        this.longitude = event.getLongitude();
-        this.latitude = event.getLatitude();
         this.startedAt = event.getStartedAt();
         this.endedAt = event.getEndedAt();
         this.startingPrice = event.getStartingPrice();

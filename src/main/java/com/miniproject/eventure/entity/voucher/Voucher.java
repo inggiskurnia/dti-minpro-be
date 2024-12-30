@@ -52,10 +52,6 @@ public class Voucher {
     @Column(name = "validity_period")
     private String validityPeriod;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id", nullable = true)
-    private Event event;
-
     @NotNull
     @ManyToOne
     @JoinColumn(name = "voucher_type_id", nullable = false)
