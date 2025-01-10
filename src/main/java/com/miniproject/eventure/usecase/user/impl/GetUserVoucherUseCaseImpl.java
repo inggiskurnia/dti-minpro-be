@@ -1,6 +1,7 @@
 package com.miniproject.eventure.usecase.user.impl;
 
 import com.miniproject.eventure.common.exeptions.DataNotFoundException;
+import com.miniproject.eventure.common.exeptions.UserVoucherNotFoundException;
 import com.miniproject.eventure.entity.user.UserVoucher;
 import com.miniproject.eventure.infrastructure.user.dto.GetUserVoucherResponseDTO;
 import com.miniproject.eventure.infrastructure.user.repository.UserVoucherRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,5 +35,13 @@ public class GetUserVoucherUseCaseImpl implements GetUserVoucherUseCase {
                 .filter(voucher -> voucher.getExpiredAt().isAfter(OffsetDateTime.now()))
                 .map(GetUserVoucherResponseDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public GetUserVoucherResponseDTO getUserVoucherByVoucherID(Long userId, Long voucherId) {
+        UserVoucher voucher = userVoucherRepository.findByUserUserIdAndVoucherVoucherId(userId, voucherId)
+                .orElseThrow(UserVoucherNotFoundException::new);
+
+        return new GetUserVoucherResponseDTO(voucher);
     }
 }

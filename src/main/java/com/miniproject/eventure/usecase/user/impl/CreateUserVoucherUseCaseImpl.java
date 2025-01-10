@@ -33,14 +33,14 @@ public class CreateUserVoucherUseCaseImpl implements CreateUserVoucherUseCase {
     ExpiryDate expiryDate;
 
     @Override
-    public UserVoucher createUserVoucher(CreateUserVoucherRequestDTO req) {
-        Optional<UserVoucher> userVoucher = userVoucherRepository.findByUserUserIdAndVoucherVoucherId(req.getUserId(), req.getVoucherId());
+    public UserVoucher createUserVoucher(Long userId, CreateUserVoucherRequestDTO req) {
+        Optional<UserVoucher> userVoucher = userVoucherRepository.findByUserUserIdAndVoucherVoucherId(userId, req.getVoucherId());
         if (userVoucher.isPresent()){
             throw new DuplicateRequestDataException("Voucher already claimed by user");
         }
 
-        User user = userRepository.findById(req.getUserId())
-                .orElseThrow(()-> new UserNotFoundException(req.getUserId()));
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new UserNotFoundException(userId));
 
         Voucher voucher = voucherRepository.findById(req.getVoucherId())
                 .orElseThrow(VoucherNotFoundException::new);

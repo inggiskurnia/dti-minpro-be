@@ -20,12 +20,17 @@ public class UserVoucherController {
     GetUserVoucherUseCase getUserVoucherUseCase;
 
     @PostMapping
-    public ResponseEntity<?> createUserVoucher(@RequestBody CreateUserVoucherRequestDTO req) {
-        return ApiResponse.success(HttpStatus.OK.value(), "Create user voucher success", createUserVoucherUseCase.createUserVoucher(req));
+    public ResponseEntity<?> createUserVoucher(@PathVariable Long userId, @RequestBody CreateUserVoucherRequestDTO req) {
+        return ApiResponse.success(HttpStatus.OK.value(), "Create user voucher success", createUserVoucherUseCase.createUserVoucher(userId, req));
     }
 
     @GetMapping
     public ResponseEntity<?> getUserVoucher(@PathVariable Long userId) {
         return ApiResponse.success(HttpStatus.OK.value(), "Get user voucher success", getUserVoucherUseCase.getUserVoucher(userId));
+    }
+
+    @GetMapping("{voucherId}")
+    public ResponseEntity<?> getUserVoucherByVoucherId(@PathVariable Long userId, @PathVariable Long voucherId){
+        return ApiResponse.success(HttpStatus.OK.value(), "Get user voucher success", getUserVoucherUseCase.getUserVoucherByVoucherID(userId, voucherId));
     }
 }
