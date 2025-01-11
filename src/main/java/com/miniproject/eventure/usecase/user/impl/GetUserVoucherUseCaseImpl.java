@@ -32,7 +32,7 @@ public class GetUserVoucherUseCaseImpl implements GetUserVoucherUseCase {
         LocalDateTime now = LocalDateTime.now();
 
         return vouchers.stream()
-                .filter(voucher -> voucher.getExpiredAt().isAfter(OffsetDateTime.now()))
+                .filter(voucher -> voucher.getExpiredAt().isAfter(OffsetDateTime.now()) && voucher.getUsedAt() == null )
                 .map(GetUserVoucherResponseDTO::new)
                 .collect(Collectors.toList());
     }
