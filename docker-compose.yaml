@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-  # Java application service
+#   Java application service
 #  app:
 #    build:
 #      context: .  # Build the image using the Dockerfile in the current directory
-#    container_name: exchange-app
+#    container_name: eventure-app
 #    depends_on:
 #      - db  # Make sure db starts before the app
 #    ports:
