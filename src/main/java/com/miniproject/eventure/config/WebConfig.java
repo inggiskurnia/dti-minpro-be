@@ -10,14 +10,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedOrigins("https://dti-minpro-be-production.up.railway.app")
+                .allowedOrigins("http://localhost:3000", "https://dti-minpro-fe-git-feature1-inggis-dev-inggiskurnias-projects.vercel.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
-
-
-
 }
-
