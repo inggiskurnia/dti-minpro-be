@@ -1,0 +1,3 @@
+INSERT INTO public.users (full_name,email,"password",city_id,created_at,updated_at,deleted_at,birthdate,is_organizer,referral_code,profile_picture,referrer_code) VALUES
+	 ('Suganda','suganda.kasum@ptcs.co.id','$2a$10$3kJk38xYULhJQs0Ki.iGie/WIm4paKSYTg6sncxkcBtokQQ9nDJUK',NULL,'2024-12-16 00:56:23.78386','2024-12-16 00:56:23.78386',NULL,'2018-02-01 00:00:00',false,'AGUSX011',NULL,''),
+	 ('Inggis','inggis@gmail.com','$2a$10$0KzcXe.Wu/QonyOeiB9zKeLXK8z4dSILJJyRqRby5c1ePHDxmWsAa',NULL,'2024-12-16 03:15:53.792532','2024-12-16 03:15:53.792532',NULL,'2017-02-01 00:00:00',false,'INGGI011',NULL,'');
