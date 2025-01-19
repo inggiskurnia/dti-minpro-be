@@ -22,7 +22,6 @@ import org.springframework.security.oauth2.server.resource.web.authentication.Be
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -61,29 +60,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(new CorsConfigurationSourceImpl()))
-                .authorizeHttpRequests(auth -> auth
-                        // Define public routes
-//                        .requestMatchers("/error/**").permitAll()
-//                        .requestMatchers("/api/v1/auth/login").permitAll()
-//                        .requestMatchers("/api/v1/user").permitAll()
-//                        .requestMatchers("/api/v1/geo/province").permitAll()
-//                        .requestMatchers("/api/v1/geo/city").permitAll()
-//                        .requestMatchers("/api/v1/demo").permitAll()
-
-                        // Only for checking
-//                        .requestMatchers("/api/v1/event-organizer").permitAll()
-//                        .requestMatchers("/api/v1/user/{id}").permitAll()
-//                        .requestMatchers("/api/v1/voucher").permitAll()
-//                        .requestMatchers("/api/v1/event").permitAll()
-//                        .requestMatchers("/api/v1/event/organizer").permitAll()
-//                        .requestMatchers("/api/v1/user/referral/{code}").permitAll()
-
-
-                        // Define rest of the routes to be private
-                        .anyRequest().permitAll()
-//                        .authenticated()
-                        )
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> {
                     oauth2.jwt(jwt -> jwt.decoder(jwtDecoder()));
@@ -97,7 +75,6 @@ public class SecurityConfig {
                             }
                         }
 
-                        // Get from headers instead of cookies
                         var header = request.getHeader("Authorization");
                         if (header != null) {
                             return header.replace("Bearer ", "");
@@ -112,7 +89,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsFilter corsFilter() {
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
@@ -120,7 +97,7 @@ public class SecurityConfig {
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
         source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+        return source;
     }
 
     @Bean
@@ -132,7 +109,7 @@ public class SecurityConfig {
     @Bean
     public JwtEncoder jwtEncoder() {
         SecretKey key = new SecretKeySpec(jwtConfigProperties.getSecret().getBytes(), "HmacSHA256");
-        JWKSource<SecurityContext> immutableSecret = new ImmutableSecret<SecurityContext>(key);
+        JWKSource<SecurityContext> immutableSecret = new ImmutableSecret<>(key);
         return new NimbusJwtEncoder(immutableSecret);
     }
 }
