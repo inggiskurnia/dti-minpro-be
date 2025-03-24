@@ -11,5 +11,9 @@ WORKDIR /app
 LABEL maintainer="inggiskurnia32@gmail.com"
 LABEL company="DTI Purwadhika"
 COPY --from=build /app/target/*.jar app.jar
-EXPOSE 3000
+
+# ✅ Fix: Change port to 8080
+EXPOSE 8080
+
+# ✅ Fix: Ensure Spring Boot listens on the correct port
 ENTRYPOINT ["java", "-jar", "app.jar"]
