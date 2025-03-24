@@ -95,8 +95,7 @@ public class SecurityConfig {
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
-                "https://dti-eventure.vercel.app",
-                "https://dti-minpro-fe-git-feature1-inggis-dev-inggiskurnias-projects.vercel.app"
+                "https://dti-eventure.vercel.app"
         ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Origin", "Accept"));
