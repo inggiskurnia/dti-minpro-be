@@ -91,52 +91,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
-				<configuration>
-					<source>21</source>
-					<target>21</target>
-					<release>21</release>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-							<version>${lombok.version}</version>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass>com.miniproject.eventure.Application</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.flywaydb</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<configuration>
-					<url>jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres</url>
-					<user>postgres.vzhudxwwpgmwegrypynd</user>
-					<password>Trisiawan32</password>
-					<schemas>
-						<schema>public</schema>
-					</schemas>
-					<cleanDisabled>false</cleanDisabled>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 </project>
