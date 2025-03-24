@@ -27,6 +27,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Arrays;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -60,7 +62,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(withDefaults()) // This ensures CORS is applied
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> {
@@ -74,12 +76,10 @@ public class SecurityConfig {
                                 }
                             }
                         }
-
                         var header = request.getHeader("Authorization");
                         if (header != null) {
                             return header.replace("Bearer ", "");
                         }
-
                         return null;
                     });
                 })
@@ -88,17 +88,26 @@ public class SecurityConfig {
                 .build();
     }
 
+
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://dti-eventure.vercel.app", "https://dti-minpro-fe-git-feature1-inggis-dev-inggiskurnias-projects.vercel.app"));
+        config.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "https://dti-eventure.vercel.app",
+                "https://dti-minpro-fe-git-feature1-inggis-dev-inggiskurnias-projects.vercel.app"
+        ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-        config.setAllowedHeaders(Arrays.asList("*"));
+        config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Origin", "Accept"));
+        config.setExposedHeaders(Arrays.asList("Authorization")); // Important for frontend access
+        config.setMaxAge(3600L); // Cache preflight requests
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
 
     @Bean
     public JwtDecoder jwtDecoder() {
